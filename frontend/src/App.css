@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+  background-color: black;
+}
+
+body {
+  background-color: black;
+}
+
+.fondo{
+  position: absolute;
+  top: 0;
+  left: 10vw;
+  height: 100vh;
+  width: 180%;
+  background-image: url("./fotos/comedor.jpg");
+  background-size: 80vw;
+}
