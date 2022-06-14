@@ -50,7 +50,9 @@ export default function Login() {
                     sessionStorage.setItem("admin", contesto.data.administrator);
                     if(contesto.data.type==="camarero"){
                         navigate('/'+data.get('email')+'/camarero');
-                    }else{
+                    }else if(contesto.data.type==="admin"){
+                        navigate('/'+data.get('email')+'/admin');
+                    }else {
                         navigate('/'+data.get('email')+'/cocinero');
                     }
                 }
