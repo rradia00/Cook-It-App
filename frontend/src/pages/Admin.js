@@ -1,17 +1,22 @@
 import * as React from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import CssBaseline from '@mui/material/CssBaseline';
+
+import LocalPolice from '@mui/icons-material/LocalPolice';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
-import LocalPolice from '@mui/icons-material/LocalPolice';
+import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import {
+  createTheme,
+  ThemeProvider,
+} from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+
+import Pie from '../components/pie';
 
 function Copyright() {
     return (
@@ -93,43 +98,8 @@ export default function Admin() {
                 </Box>
                 <Copyright sx={{ mt: 5 }} />
             </Container>
-        </ThemeProvider>
-              /*{<Stack
-                  sx={{ pt: 4 }}
-                  direction="colum"
-                  spacing={2}
-                  justifyContent="center"
-              >
-              </Stack>
-          </Container>
-          </Box>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                  Nuevo Usuario
-                  </Button>
-                  
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    onClick={()=>navigate("/")}
-                  >
-                    Nuevo Plato
-                  </Button>
-                  
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    onClick={()=>navigate("/")}
-                  >
-                    Nuevo Ingrediente
-                  </Button>}*/
 
-)}
+            <Pie></Pie>
+        </ThemeProvider>
+    );
+}

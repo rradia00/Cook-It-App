@@ -49,6 +49,7 @@ app.put('/modificar/:idPlato', function(req, res){
     var id = req.params.idPlato;
     var op = req.params.op;
     console.log("cambio de proceso para " + id);
+    let now= new Date();
     comanda.find({
        
     }).exec(function(error, platos){
@@ -58,6 +59,7 @@ app.put('/modificar/:idPlato', function(req, res){
             console.log(plato._id + " " + id);
             if(plato._id==id){
                 plato.proceso = plato.proceso + 1;
+                plato.fAct = now;
                 plato.save();
                 res.send(plato);
             }
@@ -67,30 +69,36 @@ app.put('/modificar/:idPlato', function(req, res){
 
 
 
-
- app.put('/nueva', function(req, res){
+ app.put('/nueva', async function(req, res){
      console.log("nueva comanda");
     const {primeros, segundos, postres, bebidas, mesa} = req.body;
+    console.log(primeros[0]._id);
+    console.log("********************************" + mesa);
 
-    mesaOcupada(mesa);
+    
+    const idMesa = await buscaMesa(mesa);
+    await mesaOcupada(mesa);
+    console.log(idMesa);
+    let now= new Date();
+
 
     primeros.forEach(plato => {
-        const servicio = new comanda({_id: null, mesa: new ObjectID(mesa._id), plato: new ObjectID(plato._id), proceso: 0});
+        const servicio = new comanda({_id: null, mesa: new ObjectID(idMesa), plato: new ObjectID(plato._id), proceso: 0, fAct: now, fCre: now});
         servicio.save();
     });
 
     segundos.forEach(plato => {
-        const servicio = new comanda({_id: null, mesa: new ObjectID(mesa._id), plato: new ObjectID(plato._id), proceso: 0});
+        const servicio = new comanda({_id: null, mesa: new ObjectID(idMesa), plato: new ObjectID(plato._id), proceso: 0, fAct: now, fCre: now});
         servicio.save();
     });
 
     postres.forEach(plato => {
-        const servicio = new comanda({_id: null, mesa: new ObjectID(mesa._id), plato: new ObjectID(plato._id), proceso: 0});
+        const servicio = new comanda({_id: null, mesa: new ObjectID(idMesa), plato: new ObjectID(plato._id), proceso: 0, fAct: now, fCre: now});
         servicio.save();
     });
 
     bebidas.forEach(plato => {
-        const servicio = new comanda({_id: null, mesa: new ObjectID(mesa._id), plato: new ObjectID(plato._id), proceso: 0});
+        const servicio = new comanda({_id: null, mesa: new ObjectID(idMesa), plato: new ObjectID(plato._id), proceso: 2, fAct: now, fCre: now});
         servicio.save();
     });
     res.send(primeros);
@@ -142,13 +150,16 @@ async function buscaPlatos(id){
     return promesa; 
 } 
 
-function mesaOcupada(mesaOcupada){
+async function mesaOcupada(mesaOcupada){
+    let now= new Date();
     mesas.find({
     }).exec(function(error, mesa){
         mesa.forEach(element => {
-            if(element.numero == mesaOcupada.numero){
+            if(element.numero == mesaOcupada){
                 element.libre = false;
+                element.fAct = now;
                 element.save();
+                console.log("actualización de la mesa ocupada"+element);
             }
         });
 

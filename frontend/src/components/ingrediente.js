@@ -5,13 +5,9 @@ import {
 } from 'react';
 
 import axios from 'axios';
-import Grid from '@mui/material/Grid';
+
 import Autocomplete from '@mui/material/Autocomplete';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CheckBox from '@mui/material/Checkbox';
-import Container from '@mui/material/Container';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 
 export default function Mesa(argumentos) {
@@ -53,7 +49,6 @@ export default function Mesa(argumentos) {
         <Grid container spacing={1}>
             <Grid item xs={12} sm={6}>
                 <Autocomplete
-                    fullWidth
                     options={ingredientes}
                     autoHighlight
                     value={seleccionIngrediente}

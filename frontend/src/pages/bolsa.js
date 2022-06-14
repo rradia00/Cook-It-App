@@ -18,6 +18,8 @@ import {
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
+import Pie from '../components/pie';
+
 function Copyright(props) {
     return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -178,6 +180,7 @@ export default function Login() {
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
+            <Pie></Pie>
         </ThemeProvider>
     );
 }

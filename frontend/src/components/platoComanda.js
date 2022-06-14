@@ -22,7 +22,6 @@ export default function Mesa(argumentos) {
                         align="left"
                         color="black"
                         width="100"
-                        //fullWith
                     >
                         {argumentos.nombrePlato}
                     </Typography>

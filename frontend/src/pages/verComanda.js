@@ -22,6 +22,7 @@ import {
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+import Pie from '../components/pie';
 import Component from '../components/platoComanda';
 
 function Copyright() {
@@ -114,12 +115,13 @@ export default function Comanda() {
     
 
     function servidoPlato(index, tipo){
-        var array;
+        let array;
+        alert(index + " " + tipo);
         if(tipo==="primero") array=primeros;
         else if(tipo==="segundo") array=segundos;
         else if(tipo==="postre") array=postres;
-        else if(tipo==="bebida") array=bebida;
-
+        else if(tipo==="Bebida") array=bebida;
+alert(array[index].nombre);
 
         const id = array[index].id;
         axios.put(`${url}/comandas/modificar/${id}`, {
@@ -225,6 +227,7 @@ export default function Comanda() {
                                         <Grid item key={index}  md={40}>
                                             <Component
                                                 nombrePlato={card.nombre}
+                                                posicion={index}
                                                 estado = {card.color}
                                                 tipo = {card.tipo}
                                                 servido={servidoPlato}
@@ -250,6 +253,7 @@ export default function Comanda() {
                                         <Grid item key={index}  md={40}>
                                             <Component
                                                 nombrePlato={card.nombre}
+                                                posicion={index}
                                                 estado = {card.color}
                                                 tipo = {card.tipo}
                                                 servido={servidoPlato}
@@ -275,6 +279,7 @@ export default function Comanda() {
                                         <Grid item key={index}  md={40}>
                                             <Component
                                                 nombrePlato={card.nombre}
+                                                posicion={index}
                                                 estado = {card.color}
                                                 tipo = {card.tipo}
                                                 servido={servidoPlato}
@@ -309,7 +314,7 @@ export default function Comanda() {
                 </Typography>
                 <Copyright />
             </Box>
-
+            <Pie></Pie>
         </ThemeProvider>
     );
 }

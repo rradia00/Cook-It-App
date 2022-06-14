@@ -21,29 +21,34 @@ import Privacidad from './pages/privacidad.js';
 import VerComanda from './pages/verComanda.js';
 
 function App() {
-  return (
-    <Router>
-      <div>
-        <Routes>
+
+    return (
+        <Router>
+            <div>
+                <Routes>
+                    
+                    <Route path="/" element={<Entrada/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/:user/camarero" element={<Camarero/>}/>
+                    <Route path="/:user/cocinero" element={<Cocinero/>}/>
+                    <Route path="/:user/comanda/:mesa" element={<Comanda/>}/>
+                    <Route path="/:user/verComanda/:mesa" element={<VerComanda/>}/>
+                    <Route path="/:user/admin" element={<Admin/>}/>
+                    <Route path="/:user/compras" element={<Compras/>}/>
+                    <Route path="/user/admin/nuevoIngrediente" element={<NuevoIngrediente/>}/>
+                    <Route path="/user/admin/nuevoPlato" element={<NuevoPlato/>}/>
+                    <Route path="/user/admin/nuevoUser" element={<NuevoUser/>}/>
+                    <Route path="/bolsa" element={<Bolsa/>}/>
+                    <Route path="/privacidad" element={<Privacidad/>}/>
+                </Routes>
+                
+            </div>
+
             
-            <Route path="/" element={<Entrada/>}/>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/:user/camarero" element={<Camarero/>}/>
-            <Route path="/:user/cocinero" element={<Cocinero/>}/>
-            <Route path="/:user/comanda/:mesa" element={<Comanda/>}/>
-            <Route path="/:user/verComanda/:mesa" element={<VerComanda/>}/>
-            <Route path="/:user/admin" element={<Admin/>}/>
-            <Route path="/:user/compras" element={<Compras/>}/>
-            <Route path="/user/admin/nuevoIngrediente" element={<NuevoIngrediente/>}/>
-            <Route path="/user/admin/nuevoPlato" element={<NuevoPlato/>}/>
-            <Route path="/user/admin/nuevoUser" element={<NuevoUser/>}/>
-            <Route path="/bolsa" element={<Bolsa/>}/>
-            <Route path="/privacidad" element={<Privacidad/>}/>
-            
-        </Routes>
-      </div>
-    </Router>
-  );
+
+        </Router>
+        
+    );
 }          
 
 export default App;

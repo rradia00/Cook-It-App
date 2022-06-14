@@ -7,6 +7,8 @@ const platos = new mongoose.Schema({
     precio: Number,
     alergenos: String,
     tipo: String,
+    fAct: Date,
+    fCre: Date,
 });
 
 const Objeto = mongoose.model('platos', platos);

@@ -5,7 +5,9 @@ const user = new mongoose.Schema({
     user: String,
     password: String,
     type: String,
-    administrator: Boolean
+    administrator: Boolean,
+    fAct: Date,
+    fCre: Date,
 });
 
 const Objeto = mongoose.model('users', user);

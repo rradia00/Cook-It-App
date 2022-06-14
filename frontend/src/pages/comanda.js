@@ -22,6 +22,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 import Component from '../components/comensal';
+import Pie from '../components/pie';
 
 function Copyright() {
     return (
@@ -123,28 +124,28 @@ export default function Comanda() {
                     </Typography>
                 </Toolbar>
             </AppBar>
-          <main>
-              <Box sx={{bgcolor: 'background.paper', pt: 8, pb: 6}}>
-                  <Container maxWidth="md">
-                      <Typography
-                          component="h1"
-                          variant="h2"
-                          align="center"
-                          color="text.primary"
-                          gutterBottom
-                      >
-                          COMANDA MESA {mesa}
-                      </Typography>
-                      <Box component="form" /*onSubmit={handleSubmit}*/ noValidate sx={{ mt: 1 }}>
-                          <Autocomplete
-                              options={personas}
-                              autoHighlight
-                              style={{ width: 300 }}
-                              value={numeroPersonas}
-                              inputValue={numeroPersonas}
-                              onChange={(event, newInputValue) => {
-                                  setNumeroPersonas(newInputValue);
-                                  comensales(newInputValue);
+            <main>
+                <Box sx={{bgcolor: 'background.paper', pt: 8, pb: 6}}>
+                    <Container maxWidth="md">
+                        <Typography
+                            component="h1"
+                            variant="h2"
+                            align="center"
+                            color="text.primary"
+                            gutterBottom
+                        >
+                            COMANDA MESA {mesa}
+                        </Typography>
+                        <Box component="form" /*onSubmit={handleSubmit}*/ noValidate sx={{ mt: 1 }}>
+                            <Autocomplete
+                                options={personas}
+                                autoHighlight
+                                style={{ width: 300 }}
+                                value={numeroPersonas}
+                                inputValue={numeroPersonas}
+                                onChange={(event, newInputValue) => {
+                                setNumeroPersonas(newInputValue);
+                                comensales(newInputValue);
                               }}
                               renderInput={(params) => <TextField {...params} label="Comensales"/>}
                           />
@@ -152,32 +153,32 @@ export default function Comanda() {
                           <Container sx={{ py: 8, bgcolor: 'cyan' }} maxWidth="md">
                               <Grid container spacing={4}>
                                     {cardComensales.map((card, index) => (
-                                        <Grid item key={index} xs={12} sm={6} md={6}>
-                                                
-                                            <Component
-                                                primero={primero}
-                                                segundo={segundo}
-                                                postre={postre}
-                                                bebida={bebida}
-                                                posicion={index}
-                                                /*tipo = {card.tipo}
-                                                servido={servidoPlato}
-                                                dservido={dservidoPrimeros}*/
-                                            />
-                                        </Grid>
+                                    <Grid item key={index} xs={12} sm={6} md={6}>
+                                            
+                                        <Component
+                                            primero={primero}
+                                            segundo={segundo}
+                                            postre={postre}
+                                            bebida={bebida}
+                                            posicion={index}
+                                            /*tipo = {card.tipo}
+                                            servido={servidoPlato}
+                                            dservido={dservidoPrimeros}*/
+                                        />
+                                    </Grid>
                                 ))}
-                              </Grid>
-                          </Container>
-                
-                          <Button
-                              type="button"
-                              fullWidth
-                              variant="contained"
-                              sx={{ mt: 3, mb: 2 }}
-                              onClick={() => {
-                                subeComanda();
-                            }} 
-                          >
+                                </Grid>
+                            </Container>
+                    
+                            <Button
+                                type="button"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                                onClick={() => {
+                                    subeComanda();
+                                }} 
+                            >
                               Terminar Comanda
                           </Button>
                       </Box>
@@ -189,16 +190,16 @@ export default function Comanda() {
               <Typography variant="h6" align="center" gutterBottom>
               </Typography>
               <Typography
-                  variant="subtitle1"
-                  align="center"
-                  color="text.secondary"
-                  component="p"
-              >
-                  Todos los derechos reservados
-              </Typography>
+                    variant="subtitle1"
+                    align="center"
+                    color="text.secondary"
+                    component="p"
+                >
+                    Todos los derechos reservados
+                </Typography>
               <Copyright />
-          </Box>
-
+            </Box>
+            <Pie></Pie>     
         </ThemeProvider>
     );
 }

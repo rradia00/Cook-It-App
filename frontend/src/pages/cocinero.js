@@ -22,6 +22,7 @@ import {
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+import Pie from '../components/pie';
 import Component from '../components/platoCocina';
 
 function Copyright() {
@@ -283,7 +284,7 @@ export default function Comanda() {
                 </Typography>
                 <Copyright />
             </Box>
-
+            <Pie></Pie>
         </ThemeProvider>
     );
 }

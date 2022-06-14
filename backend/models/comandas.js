@@ -5,6 +5,8 @@ const comandas = new mongoose.Schema({
     mesa: Object,
     plato: Object,
     proceso: Number,
+    fAct: Date,
+    fCre: Date,
 });
 
 const Objeto = mongoose.model('comandas', comandas);

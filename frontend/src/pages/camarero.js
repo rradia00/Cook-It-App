@@ -24,6 +24,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 import Component from '../components/mesa';
+import Pie from '../components/pie';
 
 function Copyright() {
     return (
@@ -206,7 +207,7 @@ export default function Album() {
                 </Grid>
             </Container>
           </main>
-              {/* Footer */}
+              {/*
               <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
                   <Typography variant="h6" align="center" gutterBottom>
                   </Typography>
@@ -220,7 +221,8 @@ export default function Album() {
                   </Typography>
                   <Copyright />
               </Box>
-              {/* End footer */}
+               */}
+              <Pie></Pie>
         </ThemeProvider>
     );
 }

@@ -18,6 +18,7 @@ import {
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+import Pie from '../components/pie';
 import Component from '../components/termino';
 
 const theme = createTheme();
@@ -81,9 +82,8 @@ export default function Privacidad() {
                     Atras
                 </Button>
                 </Container>
-                
-                
             </Box>
+            <Pie></Pie>
         </ThemeProvider>
     );
 }
