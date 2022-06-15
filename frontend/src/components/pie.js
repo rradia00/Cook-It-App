@@ -20,19 +20,14 @@ export default function Pie() {
         <Container sx={{ py: 3, bgcolor: 'darkgrey'}}>
             <Grid marginTop={2} container width={longitud} spacing={{ xs: 2, md: 3 }} direction="row" >
                 <Box 
-                    marginLeft={2} 
-                    width={300} 
+                    marginLeft={5} 
+                    width={200}
                     textAlign={'left'}
-                >
-                    <Link onClick={()=>condiciones()}>Nuestro github.</Link>    
-                </Box>
-                <Box 
-                    width={300}
-                    textAlign={'center'}
-                >
-                    <Typography bold="true" color="white">
+                >   <h3>
+                    <Typography bold="true" variant="underline" color="white">
                             Desarrolladores
                     </Typography>
+                    </h3>
                     <Typography color="white">
                             Rebeca Radio Armindo
                     </Typography >
@@ -47,10 +42,22 @@ export default function Pie() {
                     </Typography>
                 </Box>
                 <Box 
-                width={300}
-                textAlign={'right'}
-                >
-                    <Link onClick={()=>condiciones()}>términos de uso y privacidad.</Link>
+                    marginTop={8}
+                    marginLeft={10} 
+                    width={300} 
+                    textAlign={'right'}
+                >   <h4>
+                    <Link href="https://github.com/ULE-Informatica/aw-segunda-convocatoria-aw-segunda-convocatoria-2d.git">Nuestro github.</Link> 
+                    </h4>   
+                </Box>
+                <Box
+                     marginTop={8}
+                    marginLeft={25} 
+                    width={300} 
+                    textAlign={'right'}
+                >   <h4>
+                    <Link onClick={()=>condiciones()}>Términos de uso y privacidad.</Link>
+                    </h4>
                 </Box>
             </Grid>
       </Container>
