@@ -67,7 +67,6 @@ const fondo = require("../fotos/comedor.jpg");
                 </Box>
               
             </Container>
-            <Pie></Pie>
         </ThemeProvider>        
     );
 }
