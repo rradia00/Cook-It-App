@@ -1,4 +1,7 @@
 import * as React from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 import AddReaction from '@mui/icons-material/AddReaction';
 import Avatar from '@mui/material/Avatar';
@@ -35,6 +38,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function App() {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -42,6 +46,25 @@ export default function App() {
       email: data.get('email'),
       password: data.get('password'),
     });
+    if(data.get('email')==="" || data.get('password')===""){
+        alert("Falta un dato");
+    }else{
+        var parametros = {"user":data.get("email"), "password":data.get("password")};
+        axios.post("http://localhost:3053/nuevoUser", parametros)
+        .then((contesto)=>{
+            if(contesto.status===200 && contesto.data!=null){
+                sessionStorage.setItem("usuario", contesto.data.user);
+                sessionStorage.setItem("admin", contesto.data.administrator);
+                if(contesto.data.type==="camarero"){
+                    navigate('/'+data.get('email')+'/camarero');
+                }else if(contesto.data.type==="admin"){
+                    navigate('/'+data.get('email')+'/admin');
+                }else {
+                    navigate('/'+data.get('email')+'/cocinero');
+                }
+            }
+        })
+    }
   };
 
   return (
