@@ -19,6 +19,7 @@ app.use('/:camarero/comandas', require('./routes/comandas'));
 app.use('/:camarero/liberar', require('./routes/liberarMesa'));
 app.use('/ingredientes', require('./routes/compras'));
 app.use('/terminos', require('./routes/terminos'));
+app.use('/ingredientes', require('./routes/ingredientes'));
 
 if(process.env.NODE_ENV === "production"){
     app.use(exp.static("../frontend/build"));

@@ -1,4 +1,11 @@
 import * as React from 'react';
+import {
+  useEffect,
+  useState,
+} from 'react';
+
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -35,11 +42,141 @@ const theme = createTheme();
 const alergenos = ['no', 'gluten', 'lacteos', 'huevos', 'mostaza', 'pescado', 'molusco', 'crustaceo', 'cacahuetes', 'soja', 'cáscara de frutos secos', 'apio', 'sésamo', 'sulfitos', 'altramuces'];
 
 export default function App() {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
+    const admin = sessionStorage.getItem('usuario');
+    const [salir, setSalir]=useState(false);
+    const [ingredientes, setIngredientes]=useState([]);
+    const [seleccionIngrediente, setSeleccionIngrediente]=useState();
+    const [nuevo, setNuevo]=useState(false);
+    const [seleccionAlergenos, setSeleccionAlergenos]=useState();
 
+    const Navigate = useNavigate();
+
+
+    useEffect(() => {
+        setNuevo(false);
+        cargarIngredientes();
+       
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleSubmit = (event) => {
+        if(salir===false){
+            event.preventDefault();
+            const data = new FormData(event.currentTarget);
+            var nombre;
+            if(nuevo){
+                nombre =data.get('ingrediente');
+                //compruebo que los ingredientes no están en la base de datos
+                ingredientes.forEach(ingr =>{
+                    if(ingr===nombre){
+                        suma(nombre, data);
+                        nombre = "";
+                    }
+                });
+                
+                if(nombre!==""){
+                    unoMas(nombre, data);
+                }
+            } 
+            else {
+                nombre = seleccionIngrediente;
+                suma(nombre, data);
+            }
+        }
+        salida();
     };
+
+    function salida(){
+        Navigate("/"+admin+"/admin");
+    }
+
+    function suma(nombre, data){
+        const cantidad = data.get("cantidad");
+        axios.put("http://localhost:3053/ingredientes", {
+            ingrediente: nombre,
+            cantidad: cantidad,
+        }).then((response)=>{
+
+        });
+    }
+    
+    function unoMas(nombre, data){
+        const alergenos = seleccionAlergenos;
+        const cantidad = data.get("cantidad");
+        axios.put("http://localhost:3053/ingredientes/nuevo", {
+            ingrediente: nombre,
+            cantidad: cantidad,
+            alergenos: alergenos,
+        }).then((response)=>{
+
+        });
+    }
+
+    function cargarIngredientes(){
+        axios.get(`http://localhost:3053/ingredientes`, {}).then((response) => {
+            var lista = [];
+            var listaCompleta = [];
+            response.data.forEach(element => {
+                lista.push(element.nombre);
+                listaCompleta.push(element);
+            });
+            setIngredientes(lista);
+        });
+    }
+
+    function nuevoIngrediente(ingr){
+        setNuevo(ingr);
+    }
+
+    function mostrar(){
+        return(
+            (nuevo)?
+            <Box>
+                <Button
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={() => {
+                    nuevoIngrediente(false);
+                    mostrar();
+                }}
+            >
+                Cancelar nuevo ingrediente
+            </Button>
+            <TextField
+                name="ingrediente"
+                required
+                fullWidth
+                id="ingrediente"
+                label="Nombre del Ingrediente"
+                autoFocus
+            />
+            </Box>
+            :
+            <Box>
+                <Button
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={() => {
+                        nuevoIngrediente(true);
+                        mostrar();
+                    }}
+                >
+                    Nuevo ingrediente
+                </Button>
+                <Autocomplete
+                    id="ingrediente"
+                    options={ingredientes}
+                    value={seleccionIngrediente}
+                    inputValue={seleccionIngrediente}
+                    onChange={(event, ingredientes) => {
+                        setSeleccionIngrediente(ingredientes);
+                        //ingredienteElegido(ingredientes);
+                    }}
+                    renderInput={(params) => <TextField {...params} label="Ingrediente"/>}
+                />
+            </Box>
+        );
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -57,24 +194,25 @@ export default function App() {
                         <AddShoppingCart />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Nuevo ingrediente
+                        Gestión de ingredientes
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                        <Grid container spacing={2}>
+                        
+
+                        <Grid container spacing={0}>
                             <Grid item xs={12} sm={6}>
-                              <TextField
-                                name="ingrediente"
-                                required
-                                fullWidth
-                                id="ingrediente"
-                                label="Nombre del Ingrediente"
-                                autoFocus
-                              />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
+                                {mostrar()}
+                        
+                            
                                 <Autocomplete
                                     fullWidth
                                     options={alergenos}
+                                    value={seleccionAlergenos}
+                                    inputValue={seleccionAlergenos}
+                                    onChange={(event, alergenos) => {
+                                        setSeleccionAlergenos(alergenos);
+                                        //ingredienteElegido(ingredientes);
+                                    }}
                                     label="Alérgenos"
                                     renderInput={(params) => <TextField {...params} label='Alérgenos'/>}
                                 />
@@ -87,7 +225,7 @@ export default function App() {
                                     type="number"
                                     min="0.01"
                                     max="100"
-                                    label="Cantidad e.j.: huevos->unidades (int) || patatas->peso (double)"
+                                    label="cantidad: unidades o peso"
                                     name="cantidad"
                                 />
                             </Grid>
@@ -99,6 +237,17 @@ export default function App() {
                             sx={{ mt: 3, mb: 2 }}
                         >
                             Añadir ingrediente
+                        </Button>
+                        <Button
+                            type=""
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            onClick={() => {
+                                setSalir(true);
+                            }}
+                        >
+                            cancelar
                         </Button>
                     </Box>
                 </Box>

@@ -35,9 +35,9 @@ function App() {
                     <Route path="/:user/verComanda/:mesa" element={<VerComanda/>}/>
                     <Route path="/:user/admin" element={<Admin/>}/>
                     <Route path="/:user/compras" element={<Compras/>}/>
-                    <Route path="/user/admin/nuevoIngrediente" element={<NuevoIngrediente/>}/>
-                    <Route path="/user/admin/nuevoPlato" element={<NuevoPlato/>}/>
-                    <Route path="/user/admin/nuevoUser" element={<NuevoUser/>}/>
+                    <Route path="/:user/admin/nuevoIngrediente" element={<NuevoIngrediente/>}/>
+                    <Route path="/:user/admin/nuevoPlato" element={<NuevoPlato/>}/>
+                    <Route path="/:user/admin/nuevoUser" element={<NuevoUser/>}/>
                     <Route path="/bolsa" element={<Bolsa/>}/>
                     <Route path="/privacidad" element={<Privacidad/>}/>
                 </Routes>

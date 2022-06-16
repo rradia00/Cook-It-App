@@ -34,6 +34,7 @@ function Copyright() {
 const theme = createTheme();
 
 export default function Admin() {
+    const admin = sessionStorage.getItem('usuario');
     const navigate = useNavigate();    
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -66,7 +67,7 @@ export default function Admin() {
                                     fullWidth
                                     variant="contained"
                                     sx={{ mt: 3, mb: 2 }}
-                                    onClick={()=>navigate("/user/admin/nuevoIngrediente")}
+                                    onClick={()=>navigate("/"+admin+"/admin/nuevoIngrediente")}
                                 >
                                     Añadir ingrediente
                                 </Button>
@@ -77,7 +78,7 @@ export default function Admin() {
                                     fullWidth
                                     variant="contained"
                                     sx={{ mt: 3, mb: 2 }}
-                                    onClick={()=>navigate("/user/admin/nuevoPlato")}
+                                    onClick={()=>navigate("/"+admin+"/admin/nuevoPlato")}
                                 >
                                     Añadir plato
                                 </Button>
@@ -88,7 +89,7 @@ export default function Admin() {
                                     fullWidth
                                     variant="contained"
                                     sx={{ mt: 3, mb: 2 }}
-                                    onClick={()=>navigate("/user/admin/nuevoUser")}
+                                    onClick={()=>navigate("/"+admin+"/admin/nuevoUser")}
                                 >
                                     Añadir usuario
                                 </Button>
