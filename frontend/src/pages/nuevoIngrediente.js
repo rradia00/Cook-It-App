@@ -87,7 +87,7 @@ export default function App() {
     };
 
     function salida(){
-        Navigate("/"+admin+"/admin");
+        Navigate("/"+admin+"/admin/menuIngredientes");
     }
 
     function suma(nombre, data){

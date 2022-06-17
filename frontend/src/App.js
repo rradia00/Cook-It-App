@@ -13,7 +13,9 @@ import Cocinero from './pages/cocinero.js';
 import Comanda from './pages/comanda.js';
 import Compras from './pages/compras.js';
 import Entrada from './pages/entrada.js';
+import VerLista from './pages/listadoIngredientes.js';
 import Login from './pages/login.js';
+import MenuIngredientes from './pages/menuIngredientes.js';
 import NuevoIngrediente from './pages/nuevoIngrediente.js';
 import NuevoPlato from './pages/nuevoPlato.js';
 import NuevoUser from './pages/nuevoUser.js';
@@ -40,6 +42,8 @@ function App() {
                     <Route path="/:user/admin/nuevoUser" element={<NuevoUser/>}/>
                     <Route path="/bolsa" element={<Bolsa/>}/>
                     <Route path="/privacidad" element={<Privacidad/>}/>
+                    <Route path="/:user/admin/menuIngredientes" element={<MenuIngredientes/>}/>
+                    <Route path=":user/admin/verLista" element={<VerLista/>}/>
                 </Routes>
                 
             </div>
