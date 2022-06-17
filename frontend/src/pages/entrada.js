@@ -65,9 +65,12 @@ const fondo = require("../fotos/comedor.jpg");
                         </Button>
                     </Box>
                 </Box>
-              
+                <Box
+                marginTop={43.5}
+                >
+                <Pie></Pie>
+                </Box>
             </Container>
-            <Pie></Pie>
         </ThemeProvider>        
     );
 }

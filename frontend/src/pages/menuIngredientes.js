@@ -105,8 +105,11 @@ export default function Admin() {
                 </Box>
                 <Copyright sx={{ mt: 5 }} />
             </Container>
-
+            <Box
+            marginTop={16.7}
+            >
             <Pie></Pie>
+            </Box>
         </ThemeProvider>
     );
 }
