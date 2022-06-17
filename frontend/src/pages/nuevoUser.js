@@ -1,5 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
+import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -39,6 +40,7 @@ const theme = createTheme();
 
 export default function App() {
   const navigate = useNavigate();
+  const [salir, setSalir]=useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -132,17 +134,21 @@ export default function App() {
             >
               Registrarse
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  ¿Ya tienes una cuenta? Inicia sesión.
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
+      <Button
+          type=""
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          onClick={() => {
+              setSalir(true);
+          }}
+      >
+          cancelar
+      </Button>
       <Pie></Pie>
     </ThemeProvider>
   );
