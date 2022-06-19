@@ -1,18 +1,17 @@
 import * as React from 'react';
 import {
   useEffect,
-  useMemo,
   useState,
 } from 'react';
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useTable } from 'react-table';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import {
   createTheme,
@@ -20,6 +19,7 @@ import {
 } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
+import Component from '../components/fila';
 import Pie from '../components/pie';
 
 function Copyright() {
@@ -35,124 +35,103 @@ function Copyright() {
     );
 }
 
-function useColumns() {
-    const columns = useMemo(
-      () => [
-        {
-          Header: "Ingrediente",
-          accessor: "nombre"
-        },
-        {
-          Header: "Cantidad",
-          accessor: "cantidad"
-        },
-        {
-          Header: "Creado",
-          accessor: "fCre"
-        },
-        {
-          Header: "última Compra",
-          accessor: "fAct"
-        }
-      ],
-      []
-    );
-   
-    return columns;
-}
-
-/*var ingredientes=[
-    {
-        nombre: "Manzanas",
-        cantidad: "2",
-        fCre: "13-junio-1313",
-        fAct: "42-mayo-2015"
-    },
-    {
-        nombre: "Peruchos",
-        cantidad: "80",
-        fCre: "13-junio-1213",
-        fAct: "8-mayo-2001"
-    }
-    
-];*/
-
-
-
-
-
-
 const theme = createTheme();
 
 export default function ListadoIngredientes() {
 
     const navigate = useNavigate();
     const cocinero = sessionStorage.getItem('usuario');
-    const [admin, setAdmin]=useState([]);
     const [ingredientes, setIngredientes]=useState([]);
+    const [direccion, setDireccion]=useState(0);
+
+    const valores=[200, 150, 400, 400];
     
    useEffect(() => {
-        localizaIngredientes();
-        if(sessionStorage.getItem("admin") === "true"){
-            setAdmin(true);
-        }else{
-            setAdmin(false);
-        }
+        cargarIngredientes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    function useRows() {
-        const rows = useMemo(
-            ()=>
-                //ingredientes,
-                []
-            );
-       
-        return rows;
-    }
+    var ingr =[];
     
     async function cargarIngredientes(){  
-        axios.get(`http://localhost:3053/ingredientes`, {
+        await axios.get(`http://localhost:3053/ingredientes`, {
         }).then((response) => {
-            alert(response);
-            setIngredientes(response);
+            ingr = response.data;
+            
         });
+        setIngredientes(ingr);
     }
-
-    const columns = useColumns();
-    const data = useRows();
-    const table = useTable({ columns, data });
-    
-    
-
-    async function localizaIngredientes(){
-        await cargarIngredientes();
-    }
-
-    
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow
-      } = table;
-     
-
-    var url = `http://localhost:3053/`;
-
 
     function handleSubmit(){
         sessionStorage.removeItem("mesa");
         navigate(`/${cocinero}/cocinero`);
-    }
-
-    
-
-   
+    }   
 
     function salir(){
         navigate('/'+cocinero+'/admin/menuIngredientes');
+    }
+
+    async function cambiaDireccion(){
+        if(direccion===0 || direccion===2) setDireccion(1);
+        else setDireccion(2);
+    }
+
+    async function ordenaNombre(){
+        ingr =  ingredientes;
+        await cambiaDireccion();
+        for(var i=0; i<ingredientes.length; i++){
+            for(var j=0; j<ingredientes.length-1; j++){
+                if((direccion===1 && ingredientes[j].nombre>ingr[j+1].nombre) || (direccion===2 && ingr[j].nombre<ingredientes[j+1].nombre)){
+                    intercambia(ingr, j);  
+                }
+            } 
+        }
+        setIngredientes(ingr);
+    }
+
+    async function ordenaCantidad(){
+        ingr =  ingredientes;
+        await cambiaDireccion();
+        for(var i=0; i<ingredientes.length; i++){
+            for(var j=0; j<ingredientes.length-1; j++){
+                if((direccion===1 && ingredientes[j].cantidad>ingr[j+1].cantidad) || (direccion===2 && ingr[j].cantidad<ingredientes[j+1].cantidad)){
+                    intercambia(ingr, j);  
+                }
+            } 
+        }
+        setIngredientes(ingr);
+    }
+
+    async function ordenaFechaCreacion(){
+        ingr =  ingredientes;
+        await cambiaDireccion();
+        for(var i=0; i<ingredientes.length; i++){
+            for(var j=0; j<ingredientes.length-1; j++){
+                if((direccion===1 && ingredientes[j].fCre>ingr[j+1].fCre) || (direccion===2 && ingr[j].fCre<ingredientes[j+1].fCre)){
+                    intercambia(ingr, j);  
+                }
+            } 
+        }
+        setIngredientes(ingr);
+    }
+
+    async function ordenaFechaActualizacion(){
+        ingr =  ingredientes;
+        await cambiaDireccion();
+        for(var i=0; i<ingredientes.length; i++){
+            for(var j=0; j<ingredientes.length-1; j++){
+                if((direccion===1 && ingredientes[j].fAct>ingr[j+1].fAct) || (direccion===2 && ingr[j].fAct<ingredientes[j+1].fAct)){
+                    intercambia(ingr, j);  
+                }
+            } 
+        }
+        setIngredientes(ingr);
+    }
+
+    async function intercambia(ingr, i){
+        var aux = ingr[i];
+        ingr[i]=ingr[i+1];
+        ingr[i+1] =  aux;
     }
 
     return (
@@ -164,10 +143,10 @@ export default function ListadoIngredientes() {
                         marginTop: 8,
                         display: 'flex',
                         flexDirection: 'column',
-                        alignItems: 'center',
+                        alignItems: 'left',
                     }}
                 >
-                    <Container maxWidth="md">
+                    <Container maxWidth= 'lg'>
                         <Typography
                             component="h1"
                             variant="h2"
@@ -178,59 +157,68 @@ export default function ListadoIngredientes() {
                             Listado de Ingredientes
                         </Typography>
 
-                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                            <Container sx={{ py: 8 }} maxWidth="md">
-                                <table {...getTableProps()}>
-                                    <thead>
-                                        {
-                                        headerGroups.map(headerGroup => (
-                                            <tr {...headerGroup.getHeaderGroupProps()}>
-                                            {
-                                                headerGroup.headers.map((column) => (
-                                                <th {...column.getHeaderProps()}>
-                                                    {column.render("Header")}
-                                                </th>
-                                                ))
-                                            }
-                                            </tr>
-                                        ))
-                                        }
-                                    </thead>
-                                    <tbody {...getTableBodyProps()}>
-                                        {
-                                            rows.map(row => {
-                                                // Llamamos a la función que prepara la fila previo renderizado
-                                                prepareRow(row);
-                                                return (
-                                                // Añadimos las propiedades a la fila
-                                                <tr {...row.getRowProps()}>
-                                                    {
-                                                    // Recorremos cada celda de la fila
-                                                    row.cells.map((cell) => {
-                                                        // Añadimos las propiedades a cada celda de la fila
-                                                        return (
-                                                        <td {...cell.getCellProps()}>
-                                                            {
-                                                            // Pintamos el contenido de la celda
-                                                            //cell.render("Cell")
-                                                            }
-                                                        </td>
-                                                        );
-                                                    })
-                                                    }
-                                                </tr>
-                                                );
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
+                        <Box>
+                            <Button
+                                type="button"
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2, width: valores[0]}}
+                                onClick={() => {
+                                    ordenaNombre();
+                                }}
+                            >
+                                Nombre
+                            </Button>
+                            <Button
+                                type="button"
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2, width: valores[1]}}
+                                onClick={() => {
+                                    ordenaCantidad();
+                                }}
+                            >
+                                Cantidad
+                            </Button>
+                            <Button
+                                type="button"
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2, width: valores[2]}}
+                                onClick={() => {
+                                    ordenaFechaCreacion();
+                                }}
+                            >
+                                Fecha Creacion
+                            </Button>
+                            <Button
+                                type="button"
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2, width: valores[3]}}
+                                onClick={() => {
+                                    ordenaFechaActualizacion();
+                                }}
+                            >
+                                Fecha ultima compra
+                            </Button>
+                        </Box>
 
-                            </Container>
+                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                            {ingredientes.map((card, index) => (
+                                <Grid item key={index} xs={12} sm={6} md={6}>
+                                    <Component
+                                        uno={card.nombre}
+                                        dos={card.cantidad}
+                                        tres={card.fCre}
+                                        cuatro={card.fAct}
+                                        posicion={index}
+                                        valores={valores}
+                                    />
+                                </Grid>
+                            ))}
+                            
                             <Button
                                 type="button"
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
+                                sx={{ mt: 3, mb: 2, width: 300}}
                                 onClick={() => {
                                     salir();
                                 }}
