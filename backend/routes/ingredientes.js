@@ -3,7 +3,8 @@ var app = exp.Router();
 const baseDatos = require('../models/ingredientes');
 
 app.get('/', function (req, res){
-    console.log("Todos los ingredientes");
+    const ordenacion = req.body;
+    console.log("Todos los ingredientes ordenados según " + ordenacion);
     baseDatos.find({}).exec(function(error, ingredientes){
         if(error){
             throw error;

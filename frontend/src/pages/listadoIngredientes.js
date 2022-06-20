@@ -47,14 +47,17 @@ export default function ListadoIngredientes() {
     const valores=[200, 150, 400, 400];
     
    useEffect(() => {
-        cargarIngredientes();
+        cargarIngredientes(null);
+        setDireccion(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    var ingr =[];
     
-    async function cargarIngredientes(){  
-        await axios.get(`http://localhost:3053/ingredientes`, {
+    async function cargarIngredientes(ordenacion){  
+        var ingr = [];
+        await axios.post(`http://localhost:3053/ingredientes`, 
+        {
+            "ordenado": ordenacion,
+            "sentido": direccion
         }).then((response) => {
             ingr = response.data;
             
@@ -72,60 +75,28 @@ export default function ListadoIngredientes() {
     }
 
     async function cambiaDireccion(){
-        if(direccion===0 || direccion===2) setDireccion(1);
-        else setDireccion(2);
+        if(direccion===0 || direccion===-1) setDireccion(1);
+        else setDireccion(-1);
     }
 
     async function ordenaNombre(){
-        ingr =  ingredientes;
         await cambiaDireccion();
-        for(var i=0; i<ingredientes.length; i++){
-            for(var j=0; j<ingredientes.length-1; j++){
-                if((direccion===1 && ingredientes[j].nombre>ingr[j+1].nombre) || (direccion===2 && ingr[j].nombre<ingredientes[j+1].nombre)){
-                    intercambia(ingr, j);  
-                }
-            } 
-        }
-        setIngredientes(ingr);
+        await cargarIngredientes("nombre");
     }
 
     async function ordenaCantidad(){
-        ingr =  ingredientes;
         await cambiaDireccion();
-        for(var i=0; i<ingredientes.length; i++){
-            for(var j=0; j<ingredientes.length-1; j++){
-                if((direccion===1 && ingredientes[j].cantidad>ingr[j+1].cantidad) || (direccion===2 && ingr[j].cantidad<ingredientes[j+1].cantidad)){
-                    intercambia(ingr, j);  
-                }
-            } 
-        }
-        setIngredientes(ingr);
+        await cargarIngredientes("cantidad");
     }
 
     async function ordenaFechaCreacion(){
-        ingr =  ingredientes;
         await cambiaDireccion();
-        for(var i=0; i<ingredientes.length; i++){
-            for(var j=0; j<ingredientes.length-1; j++){
-                if((direccion===1 && ingredientes[j].fCre>ingr[j+1].fCre) || (direccion===2 && ingr[j].fCre<ingredientes[j+1].fCre)){
-                    intercambia(ingr, j);  
-                }
-            } 
-        }
-        setIngredientes(ingr);
+        await cargarIngredientes("fCre");
     }
 
     async function ordenaFechaActualizacion(){
-        ingr =  ingredientes;
         await cambiaDireccion();
-        for(var i=0; i<ingredientes.length; i++){
-            for(var j=0; j<ingredientes.length-1; j++){
-                if((direccion===1 && ingredientes[j].fAct>ingr[j+1].fAct) || (direccion===2 && ingr[j].fAct<ingredientes[j+1].fAct)){
-                    intercambia(ingr, j);  
-                }
-            } 
-        }
-        setIngredientes(ingr);
+        await cargarIngredientes("fAct");
     }
 
     async function intercambia(ingr, i){

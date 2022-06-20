@@ -10,6 +10,32 @@ app.get('/', async function (req, res){
    });
 });
 
+app.post('/', async function (req, res){
+   const {ordenado, sentido} = req.body;
+   console.log("Recuperando los ingredientes de la base de datos");
+   console.log("ordenacion " + ordenado + " en " + sentido);
+   if(ordenado==null){
+      ingredientes.find({
+      }).exec(function(error, ingredientes){
+         res.send(ingredientes);
+      });
+   }else{
+      var mysort;
+      if(ordenado=="cantidad" && sentido=="1") mysort = {cantidad: 1};
+      else if(ordenado=="cantidad" && sentido=="-1") mysort = {cantidad: -1};
+      else if(ordenado=="nombre" && sentido=="1") mysort = {nombre: 1};
+      else if(ordenado=="nombre" && sentido=="-1") mysort = {nombre: -1};
+      else if(ordenado=="fCre" && sentido=="1") mysort = {fCre: 1};
+      else if(ordenado=="fCre" && sentido=="-1") mysort = {fCre: -1};
+      else if(ordenado=="fAct" && sentido=="1") mysort = {fAct: 1};
+      else if(ordenado=="fAct" && sentido=="-1") mysort = {fAct: -1};
+      ingredientes.find({
+      }).sort(mysort).exec(function(error, ingredientes){
+         res.send(ingredientes);
+      });
+   }
+});
+
 app.put('/', async function (req, res){
    const {ingrediente, cantidad} = req.body;
    console.log("actualizando " + ingrediente + " en " + cantidad);
