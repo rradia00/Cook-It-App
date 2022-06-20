@@ -51,8 +51,9 @@ export default function Pie() {
                     </h4>   
                 </Box>
                 <Box
-                     marginTop={8}
-                    marginLeft={25} 
+                    marginTop={8}
+                    marginLeft={15} 
+                    marginRight={15}
                     width={300} 
                     textAlign={'right'}
                 >   <h4>

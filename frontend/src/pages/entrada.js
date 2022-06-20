@@ -67,6 +67,8 @@ const fondo = require("../fotos/comedor.jpg");
                 </Box>
                 <Box
                 marginTop={43.5}
+                marginLeft={-15}
+                marginRight={-15}
                 >
                 <Pie></Pie>
                 </Box>
