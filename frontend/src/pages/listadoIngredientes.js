@@ -43,6 +43,10 @@ export default function ListadoIngredientes() {
     const cocinero = sessionStorage.getItem('usuario');
     const [ingredientes, setIngredientes]=useState([]);
     const [direccion, setDireccion]=useState(0);
+    const [dNombre, setDNombre]=useState("");
+    const [dCantidad, setDCantidad]=useState("");
+    const [dFechaCre, setDFechaCre]=useState("");
+    const [dFechaAct, setDFechaAct]=useState("");
 
     const valores=[200, 150, 400, 400];
     
@@ -82,21 +86,41 @@ export default function ListadoIngredientes() {
     async function ordenaNombre(){
         await cambiaDireccion();
         await cargarIngredientes("nombre");
+        borraDirecciones();
+        setDNombre(getDireccion());
     }
 
     async function ordenaCantidad(){
         await cambiaDireccion();
         await cargarIngredientes("cantidad");
+        borraDirecciones();
+        setDCantidad(getDireccion());
     }
 
     async function ordenaFechaCreacion(){
         await cambiaDireccion();
         await cargarIngredientes("fCre");
+        borraDirecciones();
+        setDFechaCre(getDireccion());
     }
 
     async function ordenaFechaActualizacion(){
         await cambiaDireccion();
         await cargarIngredientes("fAct");
+        borraDirecciones();
+        setDFechaAct(getDireccion());
+    }
+
+    function getDireccion(){
+        if(direccion===1) return "▲";
+        else return "▼";
+    }
+
+    function borraDirecciones(){
+        setDNombre("");
+        setDCantidad("");
+        setDFechaCre("");
+        setDFechaAct("");
     }
 
     return (
@@ -131,7 +155,7 @@ export default function ListadoIngredientes() {
                                     ordenaNombre();
                                 }}
                             >
-                                Nombre
+                                Nombre {dNombre}
                             </Button>
                             <Button
                                 type="button"
@@ -141,7 +165,7 @@ export default function ListadoIngredientes() {
                                     ordenaCantidad();
                                 }}
                             >
-                                Cantidad
+                                Cantidad {dCantidad}
                             </Button>
                             <Button
                                 type="button"
@@ -151,7 +175,7 @@ export default function ListadoIngredientes() {
                                     ordenaFechaCreacion();
                                 }}
                             >
-                                Fecha Creacion
+                                Fecha Creacion {dFechaCre}
                             </Button>
                             <Button
                                 type="button"
@@ -161,7 +185,7 @@ export default function ListadoIngredientes() {
                                     ordenaFechaActualizacion();
                                 }}
                             >
-                                Fecha ultima compra
+                                Fecha ultima compra {dFechaAct}
                             </Button>
                         </Box>
 
