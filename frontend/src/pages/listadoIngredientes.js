@@ -99,12 +99,6 @@ export default function ListadoIngredientes() {
         await cargarIngredientes("fAct");
     }
 
-    async function intercambia(ingr, i){
-        var aux = ingr[i];
-        ingr[i]=ingr[i+1];
-        ingr[i+1] =  aux;
-    }
-
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
