@@ -88,9 +88,9 @@ export default function Admin() {
                                     fullWidth
                                     variant="contained"
                                     sx={{ mt: 3, mb: 2 }}
-                                    onClick={()=>navigate("/"+admin+"/admin/nuevoPlato")}
+                                    onClick={()=>navigate("/"+admin+"/admin/menuPlatos")}
                                 >
-                                    Añadir plato
+                                    Menu plato
                                 </Button>
                             </Grid>
                             <Grid item xs={12} sm={12}>

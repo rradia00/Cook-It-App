@@ -25,6 +25,8 @@ import NuevoPlato from './pages/nuevoPlato.js';
 import NuevoUsuario from './pages/nuevoUser.js';
 import Privacidad from './pages/privacidad.js';
 import VerComanda from './pages/verComanda.js';
+import MenuPlato from './pages/menuPlatos';
+import VerListaPlat from './pages/listadoPlatos';
 
 function App() {
 
@@ -52,6 +54,8 @@ function App() {
                     <Route path="/:user/admin/menuUsuarios" element={<MenuUsuarios/>}/>
                     <Route path="/:user/admin/verListaUsuarios" element={<VerListaUsuarios/>}/>
                     <Route path="/:user/admin/datosCandidato/:posicion" element={<DatosCandidato/>}/>
+                    <Route path="/:user/admin/verListaPlat" element={<VerListaPlat/>}/>
+                    <Route path="/:user/admin/menuPlatos" element={<MenuPlato/>}/>
                 </Routes>
                 
             </div>

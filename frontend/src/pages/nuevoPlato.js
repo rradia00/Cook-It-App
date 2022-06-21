@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { useState } from 'react';
+import {
+  useEffect,
+  useState,
+} from 'react';
+
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import Restaurant from '@mui/icons-material/Restaurant';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -19,7 +25,7 @@ import {
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import Component from '../components/ingrediente';
+import Component from '../components/platoCocina';
 import Pie from '../components/pie';
 
 function Copyright(props) {
@@ -43,11 +49,49 @@ const ingredientes = ['1','2','3','4','5','6','7','8','9','10','11','12','13','1
 
 
 export default function App() {
-    const [numeroIngredientes, setNumeroIngredientes]=useState();
+    const admin = sessionStorage.getItem('usuario');
+    const [salir, setSalir]=useState(false);
+
     const [cardIngredientes, setCardIngredientes]=useState([]);
+    const [numeroIngredientes, setNumeroIngredientes]=useState();
+    
+    const [platos, setPlatos]=useState([]);
+    const [seleccionPlatos, setSeleccionPlatos]=useState();
+
+     const [nuevo, setNuevo]=useState(false);
+    const [seleccionAlergenos, setSeleccionAlergenos]=useState();
+    const Navigate = useNavigate();
+    useEffect(() => {
+        setNuevo(false);
+        cargarPlatos();
+       
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
+        if(salir===false){
+            event.preventDefault();
+            const data = new FormData(event.currentTarget);
+            var nombre;
+            if(nuevo){
+                nombre =data.get('plato');
+                //compruebo que los platos no están en la base de datos
+                platos.forEach(plat =>{
+                    if(plat===nombre){
+                        
+                    }
+                });
+                
+                if(nombre!==""){
+                    unoMas(nombre, data);
+                }
+            } 
+            else {
+                nombre = seleccionPlatos;
+
+            }
+        }
+        salida();
     };
 
     function colocaComponentes(cantidad){
@@ -55,8 +99,54 @@ export default function App() {
         for (var i = 0; i < cantidad; i++) {
             ingredientes.push(i+1);      
         }
-        setCardIngredientes(ingredientes);
+        setCardIngredientes(ingredientes); 
     }
+    
+
+    function salida(){
+        Navigate("/"+admin+"/admin/menuPlatos");
+    }
+
+    function suma(nombre, data){
+        const plato = data.get("nombre");
+        const precio = data.get("precio");
+        axios.put("http://localhost:3053/platos", {
+            plato: nombre,
+            precio: precio,
+        }).then((response)=>{
+
+        });
+    }
+    
+    function unoMas(nombre, data){
+        const alergenos = seleccionAlergenos;
+        const cantidad = data.get("cantidad");
+        axios.put("http://localhost:3053/ingredientes/nuevo", {
+            ingrediente: nombre,
+            cantidad: cantidad,
+            alergenos: alergenos,
+        }).then((response)=>{
+
+        });
+    }
+
+    function cargarPlatos(){
+        axios.get(`http://localhost:3053/ingredientes`, {}).then((response) => {
+            var lista = [];
+            var listaCompleta = [];
+            response.data.forEach(element => {
+                lista.push(element.nombre);
+                listaCompleta.push(element);
+            });
+            setPlatos(lista);
+        });
+    }
+
+    function nuevoPlato(plat){
+        setNuevo(plat);
+    }
+
+    
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -147,7 +237,7 @@ export default function App() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Añadir plato
+                            Menu Platos
                         </Button>
                     </Box>
                 </Box>
