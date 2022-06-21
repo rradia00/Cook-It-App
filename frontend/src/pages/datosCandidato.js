@@ -50,8 +50,7 @@ export default function Login() {
 
 
     function contrata(){
-        alert(candidato.nombre+ " " + candidato.apellidos + " " + candidato.telefono);
-        axios.delete("http://localhost:3053/bolsa", {
+        axios.put("http://localhost:3053/bolsa", {
             nombre: candidato.nombre,
             apellidos: candidato.apellidos,
             telefono: candidato.telefono
@@ -59,13 +58,13 @@ export default function Login() {
 
         });
 
-        /*axios.post("http://localhost:3053/usuarios", {
+        axios.post("http://localhost:3053/usuarios", {
             user: candidato.nombre,
             password: candidato.clave,
             type: candidato.puesto
         }).then(response=>{
 
-        });*/
+        });
 
         salir();
     }

@@ -27,14 +27,14 @@ app.get('/:numero', function (req, res){
 })
 
 
-app.delete('/', function(req, res){
+app.put('/', function(req, res){
     const {nombre, apellidos, telefono} = req.body;
     console.log("borrando al candidato " + nombre + " " + apellidos +" de la bolsa de trabajo");
-    /*baseDatos.deleteOne({
+    baseDatos.deleteOne({
         nombre: nombre,
         apellidos: apellidos,
         telefono: telefono
-     }).exec(() => {});*/
+     }).exec(() => {});
 });
 
 app.post('/', function (req, res){
