@@ -12,7 +12,9 @@ import Camarero from './pages/camarero.js';
 import Cocinero from './pages/cocinero.js';
 import Comanda from './pages/comanda.js';
 import Compras from './pages/compras.js';
+import DatosCandidato from './pages/datosCandidato.js';
 import Entrada from './pages/entrada.js';
+import GestionBolsa from './pages/gestionBolsa.js';
 import VerLista from './pages/listadoIngredientes.js';
 import Login from './pages/login.js';
 import MenuIngredientes from './pages/menuIngredientes.js';
@@ -40,10 +42,12 @@ function App() {
                     <Route path="/:user/admin/nuevoIngrediente" element={<NuevoIngrediente/>}/>
                     <Route path="/:user/admin/nuevoPlato" element={<NuevoPlato/>}/>
                     <Route path="/:user/admin/nuevoUser" element={<NuevoUser/>}/>
+                    <Route path="/:user/admin/bolsaTrabajo" element={<GestionBolsa/>}/>
                     <Route path="/bolsa" element={<Bolsa/>}/>
                     <Route path="/privacidad" element={<Privacidad/>}/>
                     <Route path="/:user/admin/menuIngredientes" element={<MenuIngredientes/>}/>
-                    <Route path=":user/admin/verLista" element={<VerLista/>}/>
+                    <Route path="/:user/admin/verLista" element={<VerLista/>}/>
+                    <Route path="/:user/admin/datosCandidato/:posicion" element={<DatosCandidato/>}/>
                 </Routes>
                 
             </div>

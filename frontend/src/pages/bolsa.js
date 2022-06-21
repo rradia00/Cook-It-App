@@ -1,9 +1,11 @@
 import * as React from 'react';
+import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { FormControlLabel } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -35,33 +37,68 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function Login() {  
+export default function Login() {
     const navigate = useNavigate();
     const axios = require("axios").default;
+    const [terminos, setTerminos] = useState(false);
+    const [puesto, setPuesto]=useState(["Cocinero", "Camarero"]);
+    const [seleccionPuesto, setSeleccionPuesto]=useState("");
+    
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        if(data.get('email')==="" || data.get('password')===""){
-            alert("Falta un dato");
+        const opcion = seleccionPuesto;
+        const nombre = data.get("nombre");
+        const apellidos = data.get("apellidos");
+        const direccion = data.get("direccion1");
+        const localidad = data.get("direccion2");
+        const telefono = data.get("telefono");
+        const pais = data.get("pais");
+        const clave = data.get("password1");
+        const clave2 = data.get("password2");
+
+        if(opcion==="" || nombre==="" || apellidos==="" || direccion==="" || localidad==="" || pais==="" || clave==="" || clave2===""){
+            alert("falta un dato");
         }else{
-            var parametros = {"user":data.get("email"), "password":data.get("password")};
-            axios.post("http://localhost:3053/login", parametros)
-            .then((contesto)=>{
-                if(contesto.status===200 && contesto.data!=null){
-                    sessionStorage.setItem("usuario", contesto.data.user);
-                    sessionStorage.setItem("admin", contesto.data.administrator);
-                    if(contesto.data.type==="camarero"){
-                        navigate('/'+data.get('email')+'/camarero');
-                    }else{
-                        navigate('/'+data.get('email')+'/cocinero');
-                    }
+            if(terminos===false){
+                alert("Por favor, lea y acepte los términos y condiciones de uso, gracias.");
+            }else{
+                if(clave!==clave2){
+                    alert("Por favor, las claves han de ser iguales");
+                }else{
+                    axios.post("http://localhost:3053/bolsa", 
+                    {
+                        puesto: opcion,
+                        nombre: nombre,
+                        apellidos: apellidos,
+                        direccion: direccion,
+                        localidad: localidad,
+                        telefono: telefono,
+                        pais: pais,
+                        clave: clave
+                    }).then((response)=>{
+                        if(response.data.length>0){
+                            alert("ya existe un usuario en la base de datos con ese nombre");
+                        }else{
+                            alert("se ha registrado correctamente 🙂");
+                            salir();
+                        }
+                    });
                 }
-            })
+            }
         }
     };
 
     function condiciones(){
         navigate("/privacidad");
+    }
+
+    function aceptarTerminos(){
+        setTerminos(!terminos);
+    }
+
+    function salir(){
+        navigate("/");
     }
 
     return (
@@ -86,6 +123,18 @@ export default function Login() {
                         Por favor rellene los datos
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                        <Autocomplete
+                            fullwidth="true"
+                            options={puesto}
+                            autoHighlight
+                            value={seleccionPuesto}
+                            inputValue={seleccionPuesto}
+                            onChange={(event, puesto) => {
+                                setSeleccionPuesto(puesto);
+                            }}
+                            renderInput={(params) => <TextField {...params} label="Puesto de trabajo"/>}
+                        />
+
                         <TextField
                             margin="normal"
                             required
@@ -100,10 +149,10 @@ export default function Login() {
                             margin="normal"
                             required
                             fullWidth
-                            id="apellido"
-                            label="Apellidos"
-                            name="apellido"
-                            autoComplete="apellido"
+                            id="apellidos"
+                            label="apellidos"
+                            name="apellidos"
+                            autoComplete="apellidos"
                             autoFocus
                         />
                         <TextField
@@ -126,6 +175,17 @@ export default function Login() {
                             autoComplete="direccion"
                             autoFocus
                         />
+                        
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="telefono"
+                            label="Telefono de contacto"
+                            name="telefono"
+                            autoComplete="telefono"
+                            autoFocus
+                        />
                         <TextField
                             margin="normal"
                             required
@@ -142,7 +202,7 @@ export default function Login() {
                             fullWidth
                             name="password1"
                             label="Clave de acceso"
-                            type="password1"
+                            type="password"
                             id="password1"
                             autoComplete="current-password"
                         />
@@ -152,11 +212,11 @@ export default function Login() {
                             fullWidth
                             name="password2"
                             label="Repítala"
-                            type="password2"
+                            type="password"
                             id="password2"
                         />
 
-                        <FormControlLabel control={<Checkbox />} label="Declaro que he leído y acepto los "/>
+                        <FormControlLabel id="terminos" onClick={()=>aceptarTerminos()} control={<Checkbox />} label="Declaro que he leído y acepto los "/>
                         <Link onClick={()=>condiciones()}>términos de uso y privacidad.</Link>
 
                         <Button
@@ -172,7 +232,7 @@ export default function Login() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            onClick={()=>navigate("/")}
+                            onClick={()=>{salir()}}
                         >
                             cancelar
                         </Button>

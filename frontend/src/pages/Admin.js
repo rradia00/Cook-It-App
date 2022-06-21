@@ -33,6 +33,9 @@ function Copyright() {
 
 const theme = createTheme();
 
+
+
+
 export default function Admin() {
     const admin = sessionStorage.getItem('usuario');
     const navigate = useNavigate();    
@@ -41,6 +44,13 @@ export default function Admin() {
         const data = new FormData(event.currentTarget);
       
     };
+
+    function salir(){
+        sessionStorage.removeItem("admin");
+        sessionStorage.removeItem("usuario");
+        navigate('/login');
+    }
+
     return(
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -92,6 +102,28 @@ export default function Admin() {
                                     onClick={()=>navigate("/"+admin+"/admin/nuevoUser")}
                                 >
                                     Añadir usuario
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <Button
+                                    type="submit"
+                                    fullWidth="true"
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    onClick={()=>navigate("/"+admin+"/admin/bolsaTrabajo")}
+                                >
+                                    Gestionar bolsa de trabajo
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    onClick={()=>{salir()}}
+                                >
+                                    Salir
                                 </Button>
                             </Grid>
                         </Grid>

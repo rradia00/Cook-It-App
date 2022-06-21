@@ -37,85 +37,43 @@ function Copyright() {
 
 const theme = createTheme();
 
-export default function ListadoIngredientes() {
+export default function ListadoCandidatos() {
 
     const navigate = useNavigate();
     const admin = sessionStorage.getItem('usuario');
-    const [ingredientes, setIngredientes]=useState([]);
-    const [direccion, setDireccion]=useState(0);
-    const [dNombre, setDNombre]=useState("");
-    const [dCantidad, setDCantidad]=useState("");
-    const [dFechaCre, setDFechaCre]=useState("");
-    const [dFechaAct, setDFechaAct]=useState("");
+    const [candidatos, setCandidatos]=useState([]);
 
-    const valores=[200, 150, 400, 400];
+    const valores=[250, 250, 150, 350];
     
    useEffect(() => {
-        cargarIngredientes(null);
-        setDireccion(1);
+        cargarCandidatos(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
-    async function cargarIngredientes(ordenacion){  
+    async function cargarCandidatos(ordenacion){  
         var ingr = [];
-        await axios.post(`http://localhost:3053/ingredientes`, 
+        await axios.get(`http://localhost:3053/Bolsa`, 
         {
             "ordenado": ordenacion,
-            "sentido": direccion
         }).then((response) => {
             ingr = response.data;
             
         });
-        setIngredientes(ingr);
+        setCandidatos(ingr);
     }
+
+    function handleSubmit(){
+        sessionStorage.removeItem("mesa");
+        navigate(`/${admin}/cocinero`);
+    }   
 
     function salir(){
-        navigate('/'+admin+'/admin/menuIngredientes');
+        navigate('/'+admin+'/admin');
     }
 
-    async function cambiaDireccion(){
-        if(direccion===0 || direccion===-1) setDireccion(1);
-        else setDireccion(-1);
-    }
-
-    async function ordenaNombre(){
-        await cambiaDireccion();
-        await cargarIngredientes("nombre");
-        borraDirecciones();
-        setDNombre(getDireccion());
-    }
-
-    async function ordenaCantidad(){
-        await cambiaDireccion();
-        await cargarIngredientes("cantidad");
-        borraDirecciones();
-        setDCantidad(getDireccion());
-    }
-
-    async function ordenaFechaCreacion(){
-        await cambiaDireccion();
-        await cargarIngredientes("fCre");
-        borraDirecciones();
-        setDFechaCre(getDireccion());
-    }
-
-    async function ordenaFechaActualizacion(){
-        await cambiaDireccion();
-        await cargarIngredientes("fAct");
-        borraDirecciones();
-        setDFechaAct(getDireccion());
-    }
-
-    function getDireccion(){
-        if(direccion===1) return "▲";
-        else return "▼";
-    }
-
-    function borraDirecciones(){
-        setDNombre("");
-        setDCantidad("");
-        setDFechaCre("");
-        setDFechaAct("");
+    function consultar(posicion){
+        sessionStorage.setItem("nCandidato", posicion);
+        navigate('/admin/'+admin+'/datosCandidato/'+posicion);
     }
 
     return (
@@ -138,7 +96,7 @@ export default function ListadoIngredientes() {
                             color="text.primary"
                             gutterBottom
                         >
-                            Listado de Ingredientes
+                            Listado de Candidatos
                         </Typography>
 
                         <Box>
@@ -146,61 +104,53 @@ export default function ListadoIngredientes() {
                                 type="button"
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2, width: valores[0]}}
-                                onClick={() => {
-                                    ordenaNombre();
-                                }}
                             >
-                                Nombre {dNombre}
+                                Nombre
                             </Button>
                             <Button
                                 type="button"
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2, width: valores[1]}}
-                                onClick={() => {
-                                    ordenaCantidad();
-                                }}
+                                sx={{ mt: 3, mb: 2, width: valores[0]}}
                             >
-                                Cantidad {dCantidad}
+                                Apellidos   
                             </Button>
                             <Button
                                 type="button"
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2, width: valores[2]}}
-                                onClick={() => {
-                                    ordenaFechaCreacion();
-                                }}
                             >
-                                Fecha Creacion {dFechaCre}
+                                Telefono
                             </Button>
                             <Button
                                 type="button"
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2, width: valores[3]}}
-                                onClick={() => {
-                                    ordenaFechaActualizacion();
-                                }}
                             >
-                                Fecha ultima compra {dFechaAct}
+                                Fecha Entrada a la bolsa
                             </Button>
                         </Box>
 
-                        <Box component="form" noValidate sx={{ mt: 1 }}>
-                            {ingredientes.map((card, index) => (
+                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                            {candidatos.map((card, index) => (
                                 <Grid item key={index} xs={12} sm={6} md={6}>
                                     <Component
+                                        puesto={card.puesto}
                                         uno={card.nombre}
-                                        dos={card.cantidad}
-                                        tres={card.fCre}
-                                        cuatro={card.fAct}
+                                        dos={card.apellidos}
+                                        tres={card.telefono}
+                                        cuatro={card.fCre}
+                                        cinco={card.fAct}
                                         posicion={index}
                                         valores={valores}
+                                        contratacion="true"
+                                        consultar={consultar}
                                     />
                                 </Grid>
                             ))}
                             
                             <Button
                                 type="button"
-                                fullwidth
+                                fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2, width: 300}}
                                 onClick={() => {
