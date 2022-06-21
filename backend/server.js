@@ -1,7 +1,10 @@
 const exp = require('express');
 const cors = require('cors');
 const connectionDB = require('./config/connection');
+const { validateToken } = require("./middleware/validate-token.js");
+
 var app = exp();
+
 
 connectionDB();
 
@@ -10,7 +13,9 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+
 //redireccionamientos
+app.all("*", [validateToken]);
 app.use('/login', require('./routes/login'));
 app.use('/:camarero/mesas', require('./routes/mesas'));
 app.use('/:camarero/mesas/:mesa',  require('./routes/mesas'));
@@ -24,6 +29,9 @@ app.use('/bolsa', require('./routes/bolsa'));
 app.use('/bolsa/candidato', require('./routes/bolsa'));
 app.use('/usuarios', require('./routes/users'));
 
+
+
+
 if(process.env.NODE_ENV === "production"){
     app.use(exp.static("../frontend/build"));
     app.get("*", (req, res) => {
@@ -31,5 +39,9 @@ if(process.env.NODE_ENV === "production"){
     });
 }
 
-const PORT = process.env.PORT;
-app.listen(PORT, () => console.log("Puerto escuchado el 3053"));
+/*const PORT = process.env.PORT;
+app.listen(PORT, () => console.log("Puerto escuchado el 3053"));*/
+
+app.listen(3053, function(){
+    console.log("Puerto en el 3053, vayan pasando");
+});

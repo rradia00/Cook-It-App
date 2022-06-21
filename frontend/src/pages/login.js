@@ -17,6 +17,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import Pie from '../components/pie';
+import {} from 'jose';
 
 function Copyright(props) {
     return (
@@ -48,6 +49,7 @@ export default function Login() {
                 if(contesto.status===200 && contesto.data!=null){
                     sessionStorage.setItem("usuario", contesto.data.user);
                     sessionStorage.setItem("admin", contesto.data.administrator);
+                    localStorage.setItem("jwt", contesto.data.token);
                     if(contesto.data.type==="camarero"){
                         navigate('/'+data.get('email')+'/camarero');
                     }else if(contesto.data.type==="admin"){
