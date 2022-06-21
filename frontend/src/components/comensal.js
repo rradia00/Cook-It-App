@@ -134,7 +134,7 @@ export default function Mesa(argumentos) {
                 <Grid container spacing={1}>
                     {<img src={m} alt="Mesa"  />}
                     <Autocomplete
-                        fullwidth="true"
+                        fullWidth="true"
                         options={primeros}
                         autoHighlight
                         value={seleccionPrimero}
@@ -147,7 +147,7 @@ export default function Mesa(argumentos) {
                     />
 
                     <Autocomplete
-                        fullwidth="true"
+                        fullWidth="true"
                         options={segundos}
                         value={seleccionSegundo}
                         inputValue={seleccionSegundo}
@@ -159,7 +159,7 @@ export default function Mesa(argumentos) {
                     />
 
                     <Autocomplete
-                        fullwidth="true"
+                        fullWidth="true"
                         options={postres}
                         value={seleccionPostre}
                         inputValue={seleccionPostre}
@@ -171,7 +171,7 @@ export default function Mesa(argumentos) {
                     />
 
                     <Autocomplete
-                        fullwidth="true"
+                        fullWidth="true"
                         options={bebidas}
                         value={seleccionBebida}
                         inputValue={seleccionBebida}
@@ -190,7 +190,7 @@ export default function Mesa(argumentos) {
                     />
 
                     <TextField
-                    fullwidth="true"
+                    fullWidth="true"
                     name="aclaraciones"
                     label="Aclaraciones"
                     type="text"

@@ -67,6 +67,7 @@ export default function Comanda() {
     }
 
     async function subeComanda(){
+        restaIngredientes();
         axios.put("http://localhost:3053/"+camarero+"/comandas/nueva", {
             primeros: primeros,
             segundos: segundos,
@@ -76,9 +77,19 @@ export default function Comanda() {
         }).then((response) => {
             navigate('/'+camarero+'/camarero/');
         });
+
     }
 
-   
+    async function restaIngredientes(){
+        var ingredientes = await calculaIngredientes();
+    }
+
+    async function calculaIngredientes(){
+        var ingredientes = [];
+        primeros.forEach(plato=>{
+            alert(plato.ingredientes);
+        });
+    }
 
     function comensales(numero){
         var gente  = [];
