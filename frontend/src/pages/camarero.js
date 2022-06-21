@@ -207,7 +207,7 @@ export default function Album() {
                 </Grid>
             </Container>
           </main>
-              {/*
+              {
               <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
                   <Typography variant="h6" align="center" gutterBottom>
                   </Typography>
@@ -221,7 +221,7 @@ export default function Album() {
                   </Typography>
                   <Copyright />
               </Box>
-               */}
+               }
               <Pie></Pie>
         </ThemeProvider>
     );

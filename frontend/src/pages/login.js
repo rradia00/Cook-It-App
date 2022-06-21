@@ -17,7 +17,6 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import Pie from '../components/pie';
-import {} from 'jose';
 
 function Copyright(props) {
     return (
