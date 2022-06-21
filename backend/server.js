@@ -22,6 +22,7 @@ app.use('/terminos', require('./routes/terminos'));
 app.use('/ingredientes', require('./routes/ingredientes'));
 app.use('/bolsa', require('./routes/bolsa'));
 app.use('/bolsa/candidato', require('./routes/bolsa'));
+app.use('/usuarios', require('./routes/users'));
 
 if(process.env.NODE_ENV === "production"){
     app.use(exp.static("../frontend/build"));
