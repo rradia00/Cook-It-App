@@ -37,11 +37,11 @@ function Copyright() {
 
 const theme = createTheme();
 
-export default function ListadoIngredientes() {
+export default function ListadoUsuarios() {
 
     const navigate = useNavigate();
     const admin = sessionStorage.getItem('usuario');
-    const [ingredientes, setIngredientes]=useState([]);
+    const [user, setUser]=useState([]);
     const [direccion, setDireccion]=useState(0);
     const [dNombre, setDNombre]=useState("");
     const [dCantidad, setDCantidad]=useState("");
@@ -51,26 +51,27 @@ export default function ListadoIngredientes() {
     const valores=[200, 150, 400, 400];
     
    useEffect(() => {
-        cargarIngredientes(null);
+        cargarUsuarios(null);
         setDireccion(1);
+        //axios.get("http://localhost:3053/user");
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
-    async function cargarIngredientes(ordenacion){  
-        var ingr = [];
-        await axios.post(`http://localhost:3053/ingredientes`, 
+    async function cargarUsuarios(ordenacion){  
+        var usuarios = [];
+        await axios.get(`http://localhost:3053/usuarios`, 
         {
             "ordenado": ordenacion,
             "sentido": direccion
         }).then((response) => {
-            ingr = response.data;
+            usuarios = response.data;
             
         });
-        setIngredientes(ingr);
+        setUser(usuarios);
     }
 
     function salir(){
-        navigate('/'+admin+'/admin/menuIngredientes');
+        navigate('/'+admin+'/admin/menuUsuarios');
     }
 
     async function cambiaDireccion(){
@@ -80,28 +81,21 @@ export default function ListadoIngredientes() {
 
     async function ordenaNombre(){
         await cambiaDireccion();
-        await cargarIngredientes("nombre");
+        await cargarUsuarios("nombre");
         borraDirecciones();
         setDNombre(getDireccion());
     }
 
-    async function ordenaCantidad(){
-        await cambiaDireccion();
-        await cargarIngredientes("cantidad");
-        borraDirecciones();
-        setDCantidad(getDireccion());
-    }
-
     async function ordenaFechaCreacion(){
         await cambiaDireccion();
-        await cargarIngredientes("fCre");
+        await cargarUsuarios("fCre");
         borraDirecciones();
         setDFechaCre(getDireccion());
     }
 
     async function ordenaFechaActualizacion(){
         await cambiaDireccion();
-        await cargarIngredientes("fAct");
+        await cargarUsuarios("fAct");
         borraDirecciones();
         setDFechaAct(getDireccion());
     }
@@ -138,7 +132,7 @@ export default function ListadoIngredientes() {
                             color="text.primary"
                             gutterBottom
                         >
-                            Listado de Ingredientes
+                            Listado de Usuarios
                         </Typography>
 
                         <Box>
@@ -157,10 +151,10 @@ export default function ListadoIngredientes() {
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2, width: valores[1]}}
                                 onClick={() => {
-                                    ordenaCantidad();
+                                    
                                 }}
                             >
-                                Cantidad {dCantidad}
+                                Tipo {dCantidad}
                             </Button>
                             <Button
                                 type="button"
@@ -180,16 +174,16 @@ export default function ListadoIngredientes() {
                                     ordenaFechaActualizacion();
                                 }}
                             >
-                                Fecha ultima compra {dFechaAct}
+                                Fecha Ultima compra {dFechaAct}
                             </Button>
                         </Box>
 
                         <Box component="form" noValidate sx={{ mt: 1 }}>
-                            {ingredientes.map((card, index) => (
+                            {user.map((card, index) => (
                                 <Grid item key={index} xs={12} sm={6} md={6}>
                                     <Component
-                                        uno={card.nombre}
-                                        dos={card.cantidad}
+                                        uno={card.user}
+                                        dos={card.type}
                                         tres={card.fCre}
                                         cuatro={card.fAct}
                                         posicion={index}

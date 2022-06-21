@@ -172,7 +172,7 @@ export default function App() {
   }, []);
 
   function salida(){
-    navigate('/'+admin+'/menuUsuarios');
+    navigate('/admin/'+admin+'/menuUsuarios');
   }
 
 
@@ -235,7 +235,8 @@ export default function App() {
               </Grid>
             </Grid>
             <Button
-                variant="submit"
+                type="submit"
+                variant="contained"
                 sx={{ mt: 3, mb: 2}}
                 fullWidth
                 onClick={() => {
@@ -260,7 +261,8 @@ export default function App() {
           </Box>
         </Box>
         <Button
-          variant="submit"
+          type="submit"
+          variant="contained"
           sx={{ mt: 3, mb: 2}}
           fullWidth
           onClick={() => {
