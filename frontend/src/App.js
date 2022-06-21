@@ -16,11 +16,13 @@ import DatosCandidato from './pages/datosCandidato.js';
 import Entrada from './pages/entrada.js';
 import GestionBolsa from './pages/gestionBolsa.js';
 import VerLista from './pages/listadoIngredientes.js';
+import VerListaUsuarios from './pages/listadoUsuarios.js';
 import Login from './pages/login.js';
 import MenuIngredientes from './pages/menuIngredientes.js';
+import MenuUsuarios from './pages/menuUsuarios.js';
 import NuevoIngrediente from './pages/nuevoIngrediente.js';
 import NuevoPlato from './pages/nuevoPlato.js';
-import NuevoUser from './pages/nuevoUser.js';
+import NuevoUsuario from './pages/nuevoUser.js';
 import Privacidad from './pages/privacidad.js';
 import VerComanda from './pages/verComanda.js';
 
@@ -41,12 +43,14 @@ function App() {
                     <Route path="/:user/compras" element={<Compras/>}/>
                     <Route path="/:user/admin/nuevoIngrediente" element={<NuevoIngrediente/>}/>
                     <Route path="/:user/admin/nuevoPlato" element={<NuevoPlato/>}/>
-                    <Route path="/:user/admin/nuevoUser" element={<NuevoUser/>}/>
+                    <Route path="/:user/admin/nuevoUsuario" element={<NuevoUsuario/>}/>
                     <Route path="/:user/admin/bolsaTrabajo" element={<GestionBolsa/>}/>
                     <Route path="/bolsa" element={<Bolsa/>}/>
                     <Route path="/privacidad" element={<Privacidad/>}/>
                     <Route path="/:user/admin/menuIngredientes" element={<MenuIngredientes/>}/>
                     <Route path="/:user/admin/verLista" element={<VerLista/>}/>
+                    <Route path="/:user/admin/menuUsuarios" element={<MenuUsuarios/>}/>
+                    <Route path="/:user/admin/verListaUsuarios" element={<VerListaUsuarios/>}/>
                     <Route path="/:user/admin/datosCandidato/:posicion" element={<DatosCandidato/>}/>
                 </Routes>
                 
