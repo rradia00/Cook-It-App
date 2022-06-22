@@ -13,6 +13,15 @@ app.get('/', validateToken, function (req, res){
     });
 });
 
+axios.post("http://localhost:3053/usuarios", {
+            user: candidato.nombre,
+            password: candidato.clave,
+            type: candidato.puesto,
+            token: localStorage.getItem("jwt"),
+        }).then(response=>{
+
+        });
+
 app.post('/', validateToken, function(req, res){
     let now = new Date();
     const {user, password, type} = req.body;
