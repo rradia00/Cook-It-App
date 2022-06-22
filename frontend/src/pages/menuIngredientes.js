@@ -106,7 +106,7 @@ export default function Admin() {
                 <Copyright sx={{ mt: 5 }} />
             </Container>
             <Box
-            marginTop={16.7}
+            marginTop='9vw'
             >
             <Pie></Pie>
             </Box>
