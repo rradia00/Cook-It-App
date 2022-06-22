@@ -2,14 +2,15 @@ const exp = require('express');
 var app = exp.Router();
 const baseDatos = require('../models/bolsas');
 const hashMode = require('blueimp-md5/js/md5.min.js');
+const validateToken = require('../middleware/validate-token');
 
-app.get('/', function (req, res){
+app.get('/', validateToken, function (req, res){
     baseDatos.find({}).exec(function(error, usuarios){
         res.send(usuarios);
     });
 })
 
-app.get('/:numero', function (req, res){
+app.get('/:numero', validateToken, function (req, res){
     const numero = req.params.numero;
 
     console.log("buscando al candidato en la posicion " + numero);
@@ -27,7 +28,7 @@ app.get('/:numero', function (req, res){
 })
 
 
-app.put('/', function(req, res){
+app.put('/', validateToken, function(req, res){
     const {nombre, apellidos, telefono} = req.body;
     console.log("borrando al candidato " + nombre + " " + apellidos +" de la bolsa de trabajo");
     baseDatos.deleteOne({
@@ -37,7 +38,7 @@ app.put('/', function(req, res){
      }).exec(() => {});
 });
 
-app.post('/', function (req, res){
+app.post('/', validateToken, function (req, res){
     const {puesto, nombre, apellidos, direccion, localidad, telefono, pais, clave} = req.body;
     console.log("Nuevo candidato de trabajador de hostelería postula al puesto de " + puesto);
     console.log(nombre + " " + apellidos + " " + direccion + " " + localidad + " " + telefono + " " + pais + " " + clave);

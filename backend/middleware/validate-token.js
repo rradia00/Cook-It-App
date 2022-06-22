@@ -1,9 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 function validateToken(req, res, next) {
-  const authHeader = req.headers["jwt"];
-  const token = authHeader;
-  console.log(authHeader, '*****************************************');
+  const token = req.body.token;
 
   if (token == null) return res.sendStatus(401);
 

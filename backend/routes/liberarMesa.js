@@ -3,7 +3,7 @@ var app = exp.Router();
 const mesas = require('../models/mesas');
 const comanda = require('../models/comandas');
 
-app.post('/', async function (req, res){
+app.post('/', validateToken, async function (req, res){
     const {mesa} = req.body;
     console.log("Liberando la mesa: " + mesa);
     const mesaEncontrada = await buscaMesa(mesa);

@@ -15,7 +15,6 @@ app.use(cors());
 
 
 //redireccionamientos
-//app.all("*", [validateToken]);
 app.use('/login', require('./routes/login'));
 app.use('/:camarero/mesas', require('./routes/mesas'));
 app.use('/:camarero/mesas/:mesa',  require('./routes/mesas'));

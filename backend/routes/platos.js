@@ -2,7 +2,7 @@ const exp = require('express');
 var app = exp.Router();
 const platos = require('../models/platos');
 
-app.post('/', async function (req, res){
+app.post('/', validateToken, async function (req, res){
    const {ordenado, sentido} = req.body;
    console.log("Recuperando los ingredientes de la base de datos");
    console.log("ordenacion " + ordenado + " en " + sentido);
@@ -28,7 +28,7 @@ app.post('/', async function (req, res){
    }
 });
 
-app.get('/primeros', async function (req, res){
+app.get('/primeros', validateToken, async function (req, res){
    platos.find({
       tipo: "Primero"
    }).exec(function(error, platos){
@@ -36,7 +36,7 @@ app.get('/primeros', async function (req, res){
    });
 });
 
-app.get('/segundos', async function (req, res){
+app.get('/segundos', validateToken, async function (req, res){
    platos.find({
       tipo: "Segundo"
    }).exec(function(error, platos){
@@ -44,7 +44,7 @@ app.get('/segundos', async function (req, res){
    });
 });
 
-app.get('/postres', async function (req, res){
+app.get('/postres', validateToken, async function (req, res){
    platos.find({
       tipo: "Postre"
    }).exec(function(error, platos){
@@ -52,7 +52,7 @@ app.get('/postres', async function (req, res){
    });
 });
 
-app.get('/bebidas', async function (req, res){
+app.get('/bebidas', validateToken, async function (req, res){
    platos.find({
       tipo: "Bebida"
    }).exec(function(error, platos){
@@ -60,7 +60,7 @@ app.get('/bebidas', async function (req, res){
    });
 });
 
-app.post('/', async function (req, res){
+app.post('/', validateToken, async function (req, res){
    const id = req.body.id
    platos.find({
    }).exec(function(error, platos){

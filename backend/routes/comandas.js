@@ -6,14 +6,14 @@ const comanda = require('../models/comandas');
 
 const {ObjectID} = require('mongodb');//para convertir los string a objectId 
 
-app.get("/", function(req, res){
+app.get("/", validateToken, function(req, res){
 
     comanda.find({}).exec(function(error, platos){
         res.send(platos);
     });
 });
 
-app.post('/', async function (req, res){
+app.post('/', validateToken, async function (req, res){
     const {mesa} = req.body;
     console.log("Cargando los platos de la mesa "+ mesa);
     var idMesa = await buscaMesa(mesa);
@@ -30,7 +30,7 @@ app.post('/', async function (req, res){
     res.send(listaPlatos);
 });
 
-app.post('/todas', async function (req, res){
+app.post('/todas', validateToken, async function (req, res){
     console.log("Cargando todos los platos ");
 
     var listaPlatos = [];
@@ -45,7 +45,7 @@ app.post('/todas', async function (req, res){
     })
 });
 
-app.put('/modificar/:idPlato', function(req, res){
+app.put('/modificar/:idPlato', validateToken, function(req, res){
     var id = req.params.idPlato;
     var op = req.params.op;
     console.log("cambio de proceso para " + id);
@@ -69,7 +69,7 @@ app.put('/modificar/:idPlato', function(req, res){
 
 
 
- app.put('/nueva', async function(req, res){
+ app.put('/nueva', validateToken, async function(req, res){
      console.log("nueva comanda");
     const {primeros, segundos, postres, bebidas, mesa} = req.body;
 

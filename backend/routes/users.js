@@ -2,7 +2,7 @@ const exp = require('express');
 var app = exp.Router();
 const baseDatos = require('../models/user');
 
-app.get('/', function (req, res){
+app.get('/', validateToken, function (req, res){
     console.log("Todos los usuarios");
     baseDatos.find({}).exec(function(error, usuarios){
         if(error){
@@ -12,7 +12,7 @@ app.get('/', function (req, res){
     });
 });
 
-app.post('/', function(req, res){
+app.post('/', validateToken, function(req, res){
     let now = new Date();
     const {user, password, type} = req.body;
     console.log("Añadiendo al nuevo trabajador " + user + " " + type);

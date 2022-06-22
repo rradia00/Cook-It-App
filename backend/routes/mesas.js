@@ -4,7 +4,7 @@ const mesas = require('../models/mesas');
 const platos = require('../models/platos');
 const comanda = require('../models/comandas');
 
-app.post('/', async function (req, res){
+app.post('/', validateToken, async function (req, res){
    console.log("Cargando las mesas del restaurante");
    var usu = req.baseUrl.split("/")[1];
    const {tipo} = req.body;
@@ -33,13 +33,13 @@ async function buscaMesas(id){
    return promesa
 }
 
-app.get('/platos', async function (req, res){
+app.get('/platos', validateToken, async function (req, res){
    console.log("Cargando los platos ofrecidos");
    const platos = await extraePlatos();
    res.send(platos);
 });
 
-app.put('/:mesa', async function (req, res){
+app.put('/:mesa', validateToken, async function (req, res){
    const nMesa = req.params.mesa;
    console.log("Buscando la mesa " + nMesa);
    mesas.find({
