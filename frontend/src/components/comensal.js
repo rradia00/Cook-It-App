@@ -40,7 +40,9 @@ export default function Mesa(argumentos) {
     }, []);
 
     function cargarPlatos(){
-        axios.get(`http://localhost:3053/platos/primeros`, {}).then((response) => {
+        axios.get(`http://localhost:3053/platos/primeros`, {
+            token: localStorage.getItem("jwt"),
+        }).then((response) => {
             var lista = [];
             var listaCompleta = [];
             response.data.forEach(element => {
@@ -51,7 +53,9 @@ export default function Mesa(argumentos) {
             setPrimerosCompletos(listaCompleta);
         });
 
-        axios.get(`http://localhost:3053/platos/segundos`, {}).then((response) => {
+        axios.get(`http://localhost:3053/platos/segundos`, {
+            token: localStorage.getItem("jwt"),
+        }).then((response) => {
             var lista = [];
             var listaCompleta = [];
             response.data.forEach(element => {
@@ -62,7 +66,9 @@ export default function Mesa(argumentos) {
             setSegundosCompletos(listaCompleta);
         });
 
-        axios.get(`http://localhost:3053/platos/postres`, {}).then((response) => {
+        axios.get(`http://localhost:3053/platos/postres`, {
+            token: localStorage.getItem("jwt"),
+        }).then((response) => {
             var lista = [];
             var listaCompleta = [];
             response.data.forEach(element => {
@@ -73,7 +79,9 @@ export default function Mesa(argumentos) {
             setPostresCompletos(listaCompleta);
         });
 
-        axios.get(`http://localhost:3053/platos/bebidas`, {}).then((response) => {
+        axios.get(`http://localhost:3053/platos/bebidas`, {
+            token: localStorage.getItem("jwt"),
+        }).then((response) => {
             var lista = [];
             var listaCompleta = [];
             response.data.forEach(element => {

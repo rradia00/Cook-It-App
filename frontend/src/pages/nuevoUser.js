@@ -84,6 +84,7 @@ export default function App() {
     axios.put("http://localhost:3053/users", {
         user: nombre,
         password: password,
+        token: localStorage.getItem("jwt"),
     }).then((response)=>{
 
     });
@@ -94,13 +95,16 @@ export default function App() {
       axios.put("http://localhost:3053/users/nuevo", {
           user: nombre,
           password: password,
+          token: localStorage.getItem("jwt"),
       }).then((response)=>{
 
       });
   }
 
   function cargarUsuarios(){
-    axios.get(`http://localhost:3053/users`, {}).then((response) => {
+    axios.get(`http://localhost:3053/users`, {
+      token: localStorage.getItem("jwt"),
+    }).then((response) => {
         var listaUsuarios = [];
         var listaCompleta = [];
         response.data.forEach(element => {

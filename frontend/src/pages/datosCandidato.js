@@ -53,7 +53,8 @@ export default function Login() {
         axios.put("http://localhost:3053/bolsa", {
             nombre: candidato.nombre,
             apellidos: candidato.apellidos,
-            telefono: candidato.telefono
+            telefono: candidato.telefono,
+            token: localStorage.getItem("jwt"),
         }).then(response=>{
 
         });
@@ -61,7 +62,8 @@ export default function Login() {
         axios.post("http://localhost:3053/usuarios", {
             user: candidato.nombre,
             password: candidato.clave,
-            type: candidato.puesto
+            type: candidato.puesto,
+            token: localStorage.getItem("jwt"),
         }).then(response=>{
 
         });
@@ -72,7 +74,7 @@ export default function Login() {
     function cargarCandidato(){
         
         axios.get("http://localhost:3053/bolsa/candidato/"+posicion, {
-
+            token: localStorage.getItem("jwt"),
         }).then(response =>{
             setCandidato(response.data);
         });

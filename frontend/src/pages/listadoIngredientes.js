@@ -60,8 +60,9 @@ export default function ListadoIngredientes() {
         var ingr = [];
         await axios.post(`http://localhost:3053/ingredientes`, 
         {
-            "ordenado": ordenacion,
-            "sentido": direccion
+            ordenado: ordenacion,
+            sentido: direccion,
+            token: localStorage.getItem("jwt"),
         }).then((response) => {
             ingr = response.data;
             

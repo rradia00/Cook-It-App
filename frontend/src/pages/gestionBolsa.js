@@ -54,7 +54,8 @@ export default function ListadoCandidatos() {
         var ingr = [];
         await axios.get(`http://localhost:3053/Bolsa`, 
         {
-            "ordenado": ordenacion,
+            ordenado: ordenacion,
+            token: localStorage.getItem("jwt"),
         }).then((response) => {
             ingr = response.data;
             

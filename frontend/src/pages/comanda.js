@@ -74,6 +74,7 @@ export default function Comanda() {
             postres: postres,
             bebidas: bebidas,
             mesa,
+            token: localStorage.getItem("jwt"),
         }).then((response) => {
             navigate('/'+camarero+'/camarero/');
         });
@@ -94,7 +95,8 @@ export default function Comanda() {
         tipos.forEach(plato=>{
             alert(plato.cantidades[0]);
             /*axios.get("http://localhost:3035/ingredientesPlato", {
-                idPlato: plato._id;
+                token: localStorage.getItem("jwt"),
+                idPlato: plato._id,
             }).then(response=>{
 
             });

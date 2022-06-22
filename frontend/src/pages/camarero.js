@@ -64,7 +64,8 @@ export default function Album() {
     const tipoUsuario = "camarero";
     function cargarMesas(){
         axios.post(`${url}`, {
-            tipo: tipoUsuario
+            token: localStorage.getItem("jwt"),
+            tipo: tipoUsuario,
         }).then((response) => {
             mesas = response.data;
             setCard(mesas);
@@ -94,6 +95,7 @@ export default function Album() {
 
     async function borrarComanda(nMesa){
         axios.post('http://localhost:3053/'+camarero+'/liberar', {
+            token: localStorage.getItem("jwt"),
             mesa: nMesa,
         }).then(response =>{
             alert("Mesa " + nMesa + " queda libre");

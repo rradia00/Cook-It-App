@@ -53,7 +53,7 @@ export default function ListadoUsuarios() {
    useEffect(() => {
         cargarUsuarios(null);
         setDireccion(1);
-        //axios.get("http://localhost:3053/user");
+        //axios.get("http://localhost:3053/user"{token: localStorage.getItem("jwt"),}).then((response) =>{});
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
@@ -61,8 +61,9 @@ export default function ListadoUsuarios() {
         var usuarios = [];
         await axios.get(`http://localhost:3053/usuarios`, 
         {
-            "ordenado": ordenacion,
-            "sentido": direccion
+            ordenado: ordenacion,
+            sentido: direccion,
+            token: localStorage.getItem("jwt"),
         }).then((response) => {
             usuarios = response.data;
             

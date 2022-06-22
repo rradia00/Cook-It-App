@@ -95,6 +95,7 @@ export default function App() {
         axios.put("http://localhost:3053/ingredientes", {
             ingrediente: nombre,
             cantidad: cantidad,
+            token: localStorage.getItem("jwt"),
         }).then((response)=>{
 
         });
@@ -107,13 +108,16 @@ export default function App() {
             ingrediente: nombre,
             cantidad: cantidad,
             alergenos: alergenos,
+            token: localStorage.getItem("jwt"),
         }).then((response)=>{
 
         });
     }
 
     function cargarIngredientes(){
-        axios.get(`http://localhost:3053/ingredientes`, {}).then((response) => {
+        axios.get(`http://localhost:3053/ingredientes`, {
+            token: localStorage.getItem("jwt"),
+        }).then((response) => {
             var lista = [];
             var listaCompleta = [];
             response.data.forEach(element => {

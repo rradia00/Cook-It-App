@@ -75,8 +75,9 @@ export default function Login() {
                         localidad: localidad,
                         telefono: telefono,
                         pais: pais,
-                        clave: clave
-                    }).then((response)=>{
+                        clave: clave,
+                        token: localStorage.getItem("jwt"),
+}).then((response)=>{
                         if(response.data.length>0){
                             alert("ya existe un usuario en la base de datos con ese nombre");
                         }else{

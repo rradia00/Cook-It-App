@@ -71,7 +71,8 @@ export default function Comanda() {
 
     function cargarPlatos(){  
         axios.post(`${url}/comandas`, {
-            mesa: mesa
+            mesa: mesa,
+            token: localStorage.getItem("jwt"),
         }).then((response) => {
             platos = response.data;
             var primeros=[];
@@ -125,6 +126,7 @@ alert(array[index].nombre);
 
         const id = array[index].id;
         axios.put(`${url}/comandas/modificar/${id}`, {
+            token: localStorage.getItem("jwt"),
         }).then((response) => {
             if(response.status===200){
                 cargarPlatos();
@@ -138,6 +140,7 @@ alert(array[index].nombre);
     function dservidoPrimeros(index){
         const id = primeros[index].id;
         axios.put(`${url}/comandas/${id}/-`, {
+            token: localStorage.getItem("jwt"),
         }).then((response) => {
             if(response.status===200){
                 cargarPlatos();

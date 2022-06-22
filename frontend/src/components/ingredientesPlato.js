@@ -26,7 +26,8 @@ export default function Mesa(argumentos) {
     }, []);
 
     function cargarIngredientes(){
-        axios.get(`http://localhost:3053/ingredientes`, {}).then((response) => {
+        axios.get(`http://localhost:3053/ingredientes`, {token: localStorage.getItem("jwt"),
+    }).then((response) => {
             var lista = [];
             response.data.forEach(element => {
                 lista.push(element.nombre);

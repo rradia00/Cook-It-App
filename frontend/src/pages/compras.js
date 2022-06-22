@@ -48,7 +48,8 @@ export default function Comprar() {
         const cantidad = data.get('cantidadAct');
         axios.put("http://localhost:3053/ingredientes", {
             ingrediente: selecIngred,
-            cantidad: cantidad
+            cantidad: cantidad,
+            token: localStorage.getItem("jwt"),
         }).then(response =>{
 
         });
@@ -65,7 +66,7 @@ export default function Comprar() {
     async function cargarIngredientes(){
         var nombres = [];
         axios.get("http://localhost:3053/ingredientes", {
-
+            token: localStorage.getItem("jwt"),
         }).then(response =>{
             response.data.forEach(element => {
                 nombres.push(element.nombre);

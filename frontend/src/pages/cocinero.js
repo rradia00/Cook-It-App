@@ -73,6 +73,7 @@ export default function Comanda() {
 
     function cargarPlatos(){  
         axios.post(`${url}/comandas/todas`, {
+            token: localStorage.getItem("jwt"),
         }).then((response) => {
             platos = response.data;
             var primeros=[];
@@ -116,6 +117,7 @@ export default function Comanda() {
         const id = array[index].id;
 
         axios.put('http://localhost:3053/'+cocinero+'/comandas/modificar/'+id, {
+            token: localStorage.getItem("jwt"),
         }).then((response) => {
             if(response.status===200){
                 cargarPlatos();
