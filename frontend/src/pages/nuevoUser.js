@@ -49,6 +49,7 @@ export default function App() {
   const [user, setUser]=useState([]);
   const [nuevo, setNuevo]=useState(false);
   const [seleccionUsuario, setSeleccionUsuario]=useState();
+  const [candidato, setCandidato]=useState([]);
 
   const valores=[200, 150, 400, 400];
 
@@ -115,59 +116,18 @@ export default function App() {
     });
   }
 
+  axios.post("http://localhost:3053/usuarios", {
+      user: candidato.nombre,
+      password: candidato.clave,
+      type: candidato.puesto,
+      token: localStorage.getItem("jwt"),
+  }).then(response=>{
+
+  });
+
   function setSalida(user){
     setSalir(user);
   }
-
-  /*function mostrar(){
-    return(
-        (nuevo)?
-        <Box>
-            <Button
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={() => {
-                nuevoUsuario(false);
-                mostrar();
-            }}
-        >
-            Cancelar nuevo usuario
-        </Button>
-        <TextField
-            name="user"
-            required
-            fullWidth
-            id="user"
-            label="Nombre del Usuario"
-            autoFocus
-        />
-        </Box>
-        :
-        <Box>
-          <Button
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={() => {
-                  nuevoUsuario(true);
-                  mostrar();
-              }}
-          >
-              Nuevo usuario
-          </Button>
-          <Autocomplete
-              id="Usuario"
-              options={user}
-              value={seleccionUsuario}
-              inputValue={seleccionUsuario}
-              onChange={(event, user) => {
-                  setSeleccionUsuario(user);
-                  //ingredienteElegido(ingredientes);
-              }}
-              renderInput={(params) => <TextField {...params} label="Usuario"/>}
-          />
-        </Box>
-    );
-  }*/
 
   useEffect(() => {
     setNuevo(false);
@@ -178,7 +138,6 @@ export default function App() {
   function salida(){
     navigate('/admin/'+admin+'/menuUsuarios');
   }
-
 
 
   return (
