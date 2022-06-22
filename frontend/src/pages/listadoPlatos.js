@@ -178,7 +178,7 @@ export default function ListadoPlatos() {
                             <Button
                                 type="button"
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2, width: valores[1]}}
+                                sx={{ mt: 3, mb: 2, width: valores[2]}}
                                 onClick={() => {
                                     ordenaTipo();
                                 }}

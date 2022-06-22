@@ -24,7 +24,7 @@ app.post('/', function (req, res){
         let jwtTokenSecret = process.env.TOKEN_SECRET;
         let data = {
             time: Date(),
-            userId: 12,
+            userId: usuarios[0]._id,
         }
   
         const token = jwt.sign(data, jwtTokenSecret);

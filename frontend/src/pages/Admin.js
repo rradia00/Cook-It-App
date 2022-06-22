@@ -48,6 +48,7 @@ export default function Admin() {
     function salir(){
         sessionStorage.removeItem("admin");
         sessionStorage.removeItem("usuario");
+        localStorage.removeItem("jwt");
         navigate('/login');
     }
 

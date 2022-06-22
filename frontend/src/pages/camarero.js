@@ -111,6 +111,7 @@ export default function Album() {
     function salir(){
         sessionStorage.removeItem("admin");
         sessionStorage.removeItem("usuario");
+        localStorage.removeItem("jwt");
         navigate('/login');
     }
 
