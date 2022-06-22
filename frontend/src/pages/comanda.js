@@ -81,14 +81,39 @@ export default function Comanda() {
     }
 
     async function restaIngredientes(){
-        var ingredientes = await calculaIngredientes();
+        var ingredientes = [];
+        //await calculaIngredientes(ingredientes, primeros);
+        await calculaIngredientes(ingredientes, segundos);
+        //await calculaIngredientes(ingredientes, postres);
+        //await calculaIngredientes(ingredientes, primeros);
+        
+        
     }
 
-    async function calculaIngredientes(){
-        var ingredientes = [];
-        primeros.forEach(plato=>{
-            alert(plato.ingredientes);
+    async function calculaIngredientes(ingredientes, tipos){
+        tipos.forEach(plato=>{
+            alert(plato.cantidades[0]);
+            /*axios.get("http://localhost:3035/ingredientesPlato", {
+                idPlato: plato._id;
+            }).then(response=>{
+
+            });
+            /*var posibles = plato.ingredientes.split(", ");
+            var encontrado = false;
+            posibles.forEach(nuevo=>{
+                ingredientes.forEach(ingrediente=>{
+                    if(ingrediente.nombre === nuevo){
+                        ingrediente.racion = ingrediente.racion + 1;
+                        encontrado = true;
+                    }
+                });
+
+                if(encontrado === false){
+                    ingredientes.push({nombre: nuevo, racion: 1});
+                }
+            });*/
         });
+        return ingredientes;
     }
 
     function comensales(numero){

@@ -72,8 +72,6 @@ app.put('/modificar/:idPlato', function(req, res){
  app.put('/nueva', async function(req, res){
      console.log("nueva comanda");
     const {primeros, segundos, postres, bebidas, mesa} = req.body;
-    console.log(primeros[0]._id);
-    console.log("********************************" + mesa);
 
     
     const idMesa = await buscaMesa(mesa);
