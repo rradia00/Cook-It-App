@@ -39,7 +39,7 @@ export default function Privacidad() {
     async function cargarTerminos(){
         var terms;
         await axios.get("http://localhost:3053/terminos", {
-            token: localStorage.getItem("jwt"),
+
         }).then((response)=>{
             terms = response.data;            
         });
