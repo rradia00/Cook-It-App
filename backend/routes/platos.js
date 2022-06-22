@@ -61,12 +61,13 @@ app.post('/bebidas', validateToken, async function (req, res){
    });
 });
 
-app.post('/', validateToken, async function (req, res){
-   const id = req.body.id
-   platos.find({
-   }).exec(function(error, platos){
-      res.send(platos);
-   });
+app.post('/nuevo', validateToken, async function (req, res){
+   const {nombre, tipo, ingredientes, precio, cantidades, alergenos} = req.body;
+   const now = new Date();
+   console.log("Añadiendo el plato: " +  nombre + " " + tipo + " " +  precio + " "  + ingredientes + " " + cantidades+ " " + alergenos);
+   const nuevo = new platos({_id: null, nombre: nombre, ingredientes: ingredientes, cantidades: cantidades, precio: precio, 
+      alergenos: alergenos,  tipo: tipo, fAct: now, fCre: now});
+   nuevo.save();
 });
 
 module.exports = app;
