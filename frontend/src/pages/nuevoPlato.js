@@ -25,8 +25,8 @@ import {
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import Component from '../components/platoCocina';
 import Pie from '../components/pie';
+import Component from '../components/platoCocina';
 
 function Copyright(props) {
     return (
