@@ -2,6 +2,7 @@ const exp = require('express');
 var app = exp.Router();
 const mesas = require('../models/mesas');
 const comanda = require('../models/comandas');
+const validateToken = require('../middleware/validate-token');
 
 app.post('/', validateToken, async function (req, res){
     const {mesa} = req.body;

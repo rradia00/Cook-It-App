@@ -3,6 +3,7 @@ var app = exp.Router();
 const mesas = require('../models/mesas');
 const platos = require('../models/platos');
 const comanda = require('../models/comandas');
+const validateToken = require('../middleware/validate-token');
 
 const {ObjectID} = require('mongodb');//para convertir los string a objectId 
 

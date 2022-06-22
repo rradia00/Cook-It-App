@@ -1,6 +1,7 @@
 const exp = require('express');
 var app = exp.Router();
 const politicas = require('../models/politicas');
+const validateToken = require('../middleware/validate-token');
 
 
 app.get("/", validateToken, function(req, res){

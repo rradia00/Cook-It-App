@@ -1,6 +1,7 @@
 const exp = require('express');
 var app = exp.Router();
 const ingredientes = require('../models/ingredientes');
+const validateToken = require('../middleware/validate-token');
 
 app.get('/', validateToken, async function (req, res){
    console.log("Recuperando los ingredientes de la base de datos");

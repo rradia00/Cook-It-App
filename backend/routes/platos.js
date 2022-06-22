@@ -1,6 +1,7 @@
 const exp = require('express');
 var app = exp.Router();
 const platos = require('../models/platos');
+const validateToken = require('../middleware/validate-token');
 
 app.post('/', validateToken, async function (req, res){
    const {ordenado, sentido} = req.body;

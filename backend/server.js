@@ -1,7 +1,7 @@
 const exp = require('express');
 const cors = require('cors');
 const connectionDB = require('./config/connection');
-const { validateToken } = require("./middleware/validate-token.js");
+const validateToken = require("./middleware/validate-token.js");
 
 var app = exp();
 

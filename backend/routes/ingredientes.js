@@ -1,6 +1,7 @@
 const exp = require('express');
 var app = exp.Router();
 const baseDatos = require('../models/ingredientes');
+const validateToken = require('../middleware/validate-token');
 //const ingredientesPlato = require('../models/ingredientesPlato');
 
 app.get('/', validateToken, function (req, res){
