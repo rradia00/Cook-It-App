@@ -93,7 +93,6 @@ export default function Comanda() {
 
     async function calculaIngredientes(ingredientes, tipos){
         tipos.forEach(plato=>{
-            alert(plato.cantidades[0]);
             /*axios.get("http://localhost:3035/ingredientesPlato", {
                 token: localStorage.getItem("jwt"),
                 idPlato: plato._id,

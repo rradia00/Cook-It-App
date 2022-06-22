@@ -33,6 +33,7 @@ export default function Mesa(argumentos) {
     const [bebidas, setBebidas]=useState([]);
     const [bebidasCompletos, setBebidassCompletos]=useState([]);
     const [seleccionBebida, setSeleccionBebida]=useState();
+    const tokenNuevo = localStorage.getItem("jwt");
 
     useEffect(() => {
         cargarPlatos();
@@ -40,8 +41,8 @@ export default function Mesa(argumentos) {
     }, []);
 
     function cargarPlatos(){
-        axios.get(`http://localhost:3053/platos/primeros`, {
-            token: localStorage.getItem("jwt"),
+        axios.post(`http://localhost:3053/platos/primeros`, {
+            token: tokenNuevo,
         }).then((response) => {
             var lista = [];
             var listaCompleta = [];
@@ -53,8 +54,8 @@ export default function Mesa(argumentos) {
             setPrimerosCompletos(listaCompleta);
         });
 
-        axios.get(`http://localhost:3053/platos/segundos`, {
-            token: localStorage.getItem("jwt"),
+        axios.post(`http://localhost:3053/platos/segundos`, {
+            token: tokenNuevo,
         }).then((response) => {
             var lista = [];
             var listaCompleta = [];
@@ -66,8 +67,8 @@ export default function Mesa(argumentos) {
             setSegundosCompletos(listaCompleta);
         });
 
-        axios.get(`http://localhost:3053/platos/postres`, {
-            token: localStorage.getItem("jwt"),
+        axios.post(`http://localhost:3053/platos/postres`, {
+            token: tokenNuevo,
         }).then((response) => {
             var lista = [];
             var listaCompleta = [];
@@ -79,8 +80,8 @@ export default function Mesa(argumentos) {
             setPostresCompletos(listaCompleta);
         });
 
-        axios.get(`http://localhost:3053/platos/bebidas`, {
-            token: localStorage.getItem("jwt"),
+        axios.post(`http://localhost:3053/platos/bebidas`, {
+            token: tokenNuevo,
         }).then((response) => {
             var lista = [];
             var listaCompleta = [];
