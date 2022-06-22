@@ -7,7 +7,6 @@ import axios from 'axios';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
@@ -75,14 +74,6 @@ export default function Privacidad() {
                             </Grid>
                         ))}
                     </Grid>
-                    <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }} 
-                >
-                    Atras
-                </Button>
                 </Container>
             </Box>
             <Pie></Pie>
