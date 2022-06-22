@@ -17,6 +17,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
+import Autocomplete from '@mui/material/Autocomplete';
 import {
   createTheme,
   ThemeProvider,
@@ -42,14 +43,15 @@ function Copyright(props) {
 
 const theme = createTheme();
 
+const tiposDeUsuario = ['Camarero', 'Cocinero', 'Administrador'];
+
 export default function App() {
   const navigate = useNavigate();
   const admin = sessionStorage.getItem('usuario');
   const [salir, setSalir]=useState(false);
   const [user, setUser]=useState([]);
   const [nuevo, setNuevo]=useState(false);
-  const [seleccionUsuario, setSeleccionUsuario]=useState();
-  const [candidato, setCandidato]=useState([]);
+  const [tipoUsuario, setTipoUsuario]=useState();
 
   const valores=[200, 150, 400, 400];
 
@@ -57,46 +59,30 @@ export default function App() {
     if(salir===false){
       event.preventDefault();
       const data = new FormData(event.currentTarget);
-      var nombre;
-      if(nuevo){
-          nombre = data.get('user');
-          //compruebo que los usuarios no están en la base de datos
-          user.forEach(user =>{
-              if(user===nombre){
-                  suma(nombre, data);
-                  nombre = "";
-              }
-          });
-          
-          if(nombre!==""){
-              unoMas(nombre, data);
+      var nombre = data.get('user');
+      var password = data.get('password');
+
+      //compruebo que los usuarios no están en la base de datos
+      user.forEach(user =>{
+          if(user===nombre){
+            alert("El usuario ya esta metido en la base de datos");
+              nombre = "";
           }
-      } 
-      else {
-          nombre = seleccionUsuario;
-          suma(nombre, data);
+      });
+      
+      if(nombre!==""){
+        unoMas(nombre, password);
       }
     }
     salida();
   };
 
-  function suma(nombre, data){
-    const password = data.get("password");
-    axios.put("http://localhost:3053/users", {
-        user: nombre,
-        password: password,
+  function unoMas(usuario, clave){
+      axios.post("http://localhost:3053/usuarios", {
+        user: usuario,
+        password: clave,
+        type: tipoUsuario,
         token: localStorage.getItem("jwt"),
-    }).then((response)=>{
-
-    });
-  }
-
-  function unoMas(nombre, data){
-      const password = data.get("password");
-      axios.put("http://localhost:3053/users/nuevo", {
-          user: nombre,
-          password: password,
-          token: localStorage.getItem("jwt"),
       }).then((response)=>{
 
       });
@@ -115,15 +101,6 @@ export default function App() {
         setUser(listaUsuarios);
     });
   }
-
-  axios.post("http://localhost:3053/usuarios", {
-      user: candidato.nombre,
-      password: candidato.clave,
-      type: candidato.puesto,
-      token: localStorage.getItem("jwt"),
-  }).then(response=>{
-
-  });
 
   function setSalida(user){
     setSalir(user);
@@ -174,20 +151,23 @@ export default function App() {
                 <TextField
                   required
                   fullWidth
-                  id="passwd"
+                  id="password"
                   label="Contraseña"
 				          type="password"
-                  name="passwd"
-                  autoComplete='1234'
+                  name="password"
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="type"
-                  label="Tipo de Usuario"
-                  name="type"
+                <Autocomplete
+                    fullWidth
+                    options={tiposDeUsuario}
+                    label="Tipo de Usuario"
+                    value={tipoUsuario}
+                    inputValue={tipoUsuario}
+                    onChange={(event, type) =>{
+                        setTipoUsuario(type);
+                    }}
+                    renderInput={(params) => <TextField {...params} label='Tipo de Usuario'/>}
                 />
               </Grid>
               <Grid item xs={12}>
