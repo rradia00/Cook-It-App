@@ -29,7 +29,7 @@ app.post('/', validateToken, async function (req, res){
    }
 });
 
-app.get('/primeros', validateToken, async function (req, res){
+app.post('/primeros', validateToken, async function (req, res){
    platos.find({
       tipo: "Primero"
    }).exec(function(error, platos){
@@ -37,7 +37,7 @@ app.get('/primeros', validateToken, async function (req, res){
    });
 });
 
-app.get('/segundos', validateToken, async function (req, res){
+app.post('/segundos', validateToken, async function (req, res){
    platos.find({
       tipo: "Segundo"
    }).exec(function(error, platos){
@@ -45,7 +45,7 @@ app.get('/segundos', validateToken, async function (req, res){
    });
 });
 
-app.get('/postres', validateToken, async function (req, res){
+app.post('/postres', validateToken, async function (req, res){
    platos.find({
       tipo: "Postre"
    }).exec(function(error, platos){
@@ -53,7 +53,7 @@ app.get('/postres', validateToken, async function (req, res){
    });
 });
 
-app.get('/bebidas', validateToken, async function (req, res){
+app.post('/bebidas', validateToken, async function (req, res){
    platos.find({
       tipo: "Bebida"
    }).exec(function(error, platos){

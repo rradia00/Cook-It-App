@@ -1,14 +1,14 @@
 const jwt = require("jsonwebtoken");
 
 function validateToken(req, res, next) {
-const token = req.body.token;
+    const token = req.body.token;
+    console.log(req);
+    if (token == null) return res.sendStatus(401);
 
-if (token == null) return res.sendStatus(401);
-
-jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
-    if (err) return res.sendStatus(403);
-    req.tokenData = decoded;
-    next();
-});
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
+        if (err) return res.sendStatus(403);
+        req.tokenData = decoded;
+        next();
+    });
 }
 module.exports = validateToken;
