@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { useState } from 'react';
+import {
+  useEffect,
+  useState,
+} from 'react';
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +32,7 @@ function Copyright() {
         <Typography variant="body2" color="text.secondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
-                www.grupoInnova6d.com
+                https://www.grupoinnova6d.com
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -54,6 +57,16 @@ export default function Comanda() {
     const [segundos, setSegundo]=useState([]);
     const [postres, setPostres]=useState([]);
     const [bebidas, setBebida]=useState([]);
+    const [ingredientes, setIngredientes]=useState([]);
+    //const [comanda, setComanda]=useState(true);
+    var comanda = true;
+
+    useEffect(() => {
+        cargarIngredientes();
+       
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    
 
     async function handleSubmit(){
         sessionStorage.removeItem("mesa");
@@ -62,59 +75,93 @@ export default function Comanda() {
 
 
         //navigate('/'+camarero+'/camarero/');
+    }
 
-        
+    async function cargarIngredientes(){
+        axios.post(`http://localhost:3053/ingredientes`, {
+            token: localStorage.getItem("jwt"),
+        }).then((response) => {
+            var lista = [];
+            response.data.forEach(element => {
+                lista.push(element);
+            });
+            setIngredientes(lista);
+        });
     }
 
     async function subeComanda(){
-        restaIngredientes();
-        axios.put("http://localhost:3053/"+camarero+"/comandas/nueva", {
-            primeros: primeros,
-            segundos: segundos,
-            postres: postres,
-            bebidas: bebidas,
-            mesa,
-            token: localStorage.getItem("jwt"),
-        }).then((response) => {
-            navigate('/'+camarero+'/camarero/');
-        });
-
-    }
-
-    async function restaIngredientes(){
-        var ingredientes = [];
-        //await calculaIngredientes(ingredientes, primeros);
-        await calculaIngredientes(ingredientes, segundos);
-        //await calculaIngredientes(ingredientes, postres);
-        //await calculaIngredientes(ingredientes, primeros);
-        
-        
-    }
-
-    async function calculaIngredientes(ingredientes, tipos){
-        tipos.forEach(plato=>{
-            /*axios.get("http://localhost:3035/ingredientesPlato", {
+        await restaIngredientes();
+        if(comanda===true){
+            actualizaIngredientes();
+            await axios.put("http://localhost:3053/"+camarero+"/comandas/nueva", {
+                primeros: primeros,
+                segundos: segundos,
+                postres: postres,
+                bebidas: bebidas,
+                mesa,
                 token: localStorage.getItem("jwt"),
-                idPlato: plato._id,
+            }).then((response) => {
+                navigate('/'+camarero+'/camarero/');
+            });
+        }else{
+            comanda=true;
+        }
+    }
+
+    function actualizaIngredientes(){
+        ingredientes.forEach(ingrediente=>{
+            axios.put("http://localhost:3053/ingredientesAct",{
+                ingrediente: ingrediente.nombre,
+                cantidad: ingrediente.cantidad,
+                token: localStorage.getItem("jwt"),
             }).then(response=>{
 
             });
-            /*var posibles = plato.ingredientes.split(", ");
-            var encontrado = false;
-            posibles.forEach(nuevo=>{
+        });
+    }
+
+    async function restaIngredientes(){
+        if(comanda===true) await calculaIngredientes(primeros);
+        if(comanda===true) await calculaIngredientes(segundos);
+        if(comanda===true) await calculaIngredientes(postres);
+        if(comanda===true) await calculaIngredientes(primeros); 
+    }
+
+    async function calculaIngredientes(tipos){
+        var i=0;
+        tipos.forEach(plato=>{
+            if(comanda===true){
+                const ingrPlato = plato.ingredientes;
+                ingrPlato.forEach(ingr =>{
+                    restaExistencias(ingr, plato.cantidades[i]);
+                    i=i+1;
+                })
+
                 ingredientes.forEach(ingrediente=>{
-                    if(ingrediente.nombre === nuevo){
-                        ingrediente.racion = ingrediente.racion + 1;
-                        encontrado = true;
+                    if(ingrediente.cantidad<0){
+                        if(comanda===true){ 
+                            cargarIngredientes();
+                            alert("El plato " + plato.nombre + " no se puede servir, no hay ingredientes");
+                            comanda=false;
+                        }
                     }
                 });
-
-                if(encontrado === false){
-                    ingredientes.push({nombre: nuevo, racion: 1});
-                }
-            });*/
+            }
         });
-        return ingredientes;
+    }
+
+    async function restaExistencias(ingr, cant){
+        var lista = ingredientes;
+        var i = 0;
+        lista.forEach(elemento=>{
+            if(lista[i].nombre===ingr){
+                //alert(lista[i].cantidad + "  " + cant  + " " + ingr);
+                lista[i].cantidad = lista[i].cantidad - cant;
+                //alert(lista[i].cantidad);
+            }
+            i=i+1;
+        });
+        setIngredientes(lista);
     }
 
     function comensales(numero){
@@ -198,9 +245,6 @@ export default function Comanda() {
                                             postre={postre}
                                             bebida={bebida}
                                             posicion={index}
-                                            /*tipo = {card.tipo}
-                                            servido={servidoPlato}
-                                            dservido={dservidoPrimeros}*/
                                         />
                                     </Grid>
                                 ))}

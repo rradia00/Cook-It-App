@@ -18,6 +18,7 @@ app.post('/', validateToken, async function (req, res){
    if(ordenado==null){
       ingredientes.find({
       }).exec(function(error, ingredientes){
+         console.log(ingredientes);
          res.send(ingredientes);
       });
    }else{

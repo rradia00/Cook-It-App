@@ -23,7 +23,7 @@ app.use('/:camarero/comandas', require('./routes/comandas'));
 app.use('/:camarero/liberar', require('./routes/liberarMesa'));
 app.use('/ingredientes', require('./routes/compras'));
 app.use('/terminos', require('./routes/terminos'));
-app.use('/ingredientes', require('./routes/ingredientes'));
+app.use('/ingredientesAct', require('./routes/ingredientes'));
 app.use('/bolsa', require('./routes/bolsa'));
 app.use('/bolsa/candidato', require('./routes/bolsa'));
 app.use('/usuarios', require('./routes/users'));

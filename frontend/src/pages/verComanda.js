@@ -30,7 +30,7 @@ function Copyright() {
         <Typography variant="body2" color="text.secondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
-                www.grupoInnova6d.com
+                https://www.grupoinnova6d.com
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -117,12 +117,10 @@ export default function Comanda() {
 
     function servidoPlato(index, tipo){
         let array;
-        alert(index + " " + tipo);
         if(tipo==="primero") array=primeros;
         else if(tipo==="segundo") array=segundos;
         else if(tipo==="postre") array=postres;
         else if(tipo==="Bebida") array=bebida;
-alert(array[index].nombre);
 
         const id = array[index].id;
         axios.put(`${url}/comandas/modificar/${id}`, {

@@ -208,11 +208,8 @@ export default function Mesa(argumentos) {
                     <Typography align='center'> Pan incluido</Typography>
                 </Grid>
             </Container>
-
-            
         </CardContent>
     </Card>
-
 
     );
   }

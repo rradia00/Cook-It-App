@@ -21,10 +21,6 @@ const Saludo = (event) => {
 const navigate = useNavigate();
 const fondo = require("../fotos/comedor.jpg");
 
-  const HandleSubmit = () => {
-      navigate('/login');    
-  };
-
   return (
       <ThemeProvider theme={theme}>
           <Container component="main" className="fondo">
@@ -50,7 +46,7 @@ const fondo = require("../fotos/comedor.jpg");
                     >
                         Restaurante "El Rincón de la Comida"
                     </Typography>
-                    <Box component="form" onSubmit={HandleSubmit} noValidate sx={{ mt: 1, width: 300}}>
+                    <Box noValidate sx={{ mt: 1, width: 300}}>
                         <Button
                             type="submit"
                             fullWidth
@@ -60,15 +56,18 @@ const fondo = require("../fotos/comedor.jpg");
                                 mb: 2,
                                 marginTop: 5,
                             }}
+                            onClick={()=>{
+                                navigate('/login'); 
+                            }}
                         >
                             Entrar
                         </Button>
                     </Box>
                 </Box>
                 <Box
-                marginTop='20vw'
-                marginLeft='-15vw'
-                marginRight='-15vw'
+                marginTop={43.5}
+                marginLeft={-15}
+                marginRight={-15}
                 >
                 <Pie></Pie>
                 </Box>

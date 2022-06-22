@@ -30,7 +30,7 @@ function Copyright(props) {
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
-                www.grupoInnova6d.com
+                https://www.grupoinnova6d.com
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -115,7 +115,7 @@ export default function App() {
     }
 
     function cargarIngredientes(){
-        axios.get(`http://localhost:3053/ingredientes`, {
+        axios.post(`http://localhost:3053/ingredientes`, {
             token: localStorage.getItem("jwt"),
         }).then((response) => {
             var lista = [];
