@@ -61,7 +61,7 @@ const fondo = require("../fotos/comedor.jpg");
                                 marginTop: 5,
                             }}
                         >
-                            Entrar
+                            Entraar
                         </Button>
                     </Box>
                 </Box>
