@@ -221,7 +221,11 @@ export default function ListadoUsuarios() {
                 </Typography>
                 <Copyright />
             </Box>
-            <Pie></Pie>
+            <Box
+             marginTop='10vw'
+             >
+            <Pie></Pie></Box>
+            
         </ThemeProvider>
     );
 }

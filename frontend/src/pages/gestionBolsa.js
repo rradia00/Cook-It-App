@@ -177,7 +177,12 @@ export default function ListadoCandidatos() {
                 </Typography>
                 <Copyright />
             </Box>
+            <Box
+            marginTop='8vw'
+            >
             <Pie></Pie>
+            </Box>
+            
         </ThemeProvider>
     );
 }
